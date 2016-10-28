@@ -1,2 +1,2 @@
 # numdisPhysicsEngine
-C++ Lib Physics Engine Project
+C++ Physics Engine Lib Project

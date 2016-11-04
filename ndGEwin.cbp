@@ -15,33 +15,46 @@
 				<Option createStaticLib="1" />
 				<Compiler>
 					<Add option="-Wall" />
-					<Add option="-DBUILD_DLL" />
+					<Add option="-std=c++11" />
 					<Add option="-g" />
+					<Add directory="deps/include" />
 				</Compiler>
 				<Linker>
-					<Add library="user32" />
+					<Add library="mingw32" />
+					<Add library="SDL2main" />
+					<Add library="SDL2" />
+					<Add library="glew32" />
+					<Add library="opengl32" />
+					<Add library="glu32" />
+					<Add directory="deps/lib" />
 				</Linker>
 			</Target>
 			<Target title="Release">
-				<Option output="ndGEwin/bin/Release/ndGEwin" prefix_auto="1" extension_auto="1" />
-				<Option object_output="ndGEwin/obj/Release/" />
-				<Option type="3" />
+				<Option output="ndGE/winBin/Release/ndGEwin" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="" />
+				<Option object_output="ndGE/winObj/Release/" />
+				<Option type="2" />
 				<Option compiler="gcc" />
 				<Option createDefFile="1" />
-				<Option createStaticLib="1" />
 				<Compiler>
 					<Add option="-Wall" />
-					<Add option="-DBUILD_DLL" />
 					<Add option="-O2" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
-					<Add library="user32" />
 				</Linker>
 			</Target>
 		</Build>
+		<Unit filename="ndGE/Camera2D.cpp" />
+		<Unit filename="ndGE/Camera2D.h" />
+		<Unit filename="ndGE/ErrorHandler.cpp" />
+		<Unit filename="ndGE/ErrorHandler.h" />
+		<Unit filename="ndGE/GLSLProgram.cpp" />
+		<Unit filename="ndGE/GLSLProgram.h" />
 		<Unit filename="ndGE/Window.cpp" />
 		<Unit filename="ndGE/Window.h" />
+		<Unit filename="ndGE/ndGE.cpp" />
+		<Unit filename="ndGE/ndGE.h" />
 		<Extensions>
 			<code_completion />
 			<envvars />

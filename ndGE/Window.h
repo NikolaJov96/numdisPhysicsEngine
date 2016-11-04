@@ -1,16 +1,25 @@
-#ifndef NDGE_H
-#define NDGE_H
+#ifndef WINDOW_H
+#define WINDOW_H
+
+#include <Windows.h>
+#include <SDL2/SDL.h>
+#include <string>
 
 namespace ndGE {
 
     class Window {
     public:
-        Window(int w = 720, int h = 360);
+        Window();
         ~Window();
+        int create(std::string windowName, int width, int height);
+        void swapBuffer();
+        int getScrW();
+        int getScrH();
     private:
-        int _width, _hight;
+        int _width, _height;
+        SDL_Window *_window;
     };
 
 }
 
-#endif // NDGE_H
+#endif // WINDOW_H

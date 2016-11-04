@@ -12,13 +12,22 @@
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
+					<Add option="-std=c++11" />
 					<Add option="-g" />
+					<Add directory="deps/include" />
 				</Compiler>
 				<Linker>
-					<Add library="ndPE/winBin/Debug/libndPEwin.a" />
-					<Add library="ndGE/winBin/Debug/libndGEwin.a" />
+					<Add library="libndGEwin" />
+					<Add library="libndPEwin" />
+					<Add library="glew32" />
+					<Add library="opengl32" />
+					<Add library="glu32" />
+					<Add library="mingw32" />
+					<Add library="SDL2main" />
+					<Add library="SDL2" />
 					<Add directory="ndPE/winBin/Debug" />
 					<Add directory="ndGE/winBin/Debug" />
+					<Add directory="deps/lib" />
 				</Linker>
 			</Target>
 			<Target title="Release">
@@ -28,12 +37,13 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-O2" />
-					<Add directory="ndPE/winBin/Debug" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
 					<Add library="ndPE/winBin/Debug/libndPEwin.a" />
 					<Add library="ndGE/winBin/Debug/libndGEwin.a" />
+					<Add directory="ndPE/winBin/Debug" />
+					<Add directory="ndGE/winBin/Debug" />
 				</Linker>
 			</Target>
 		</Build>

@@ -1,0 +1,21 @@
+# depslib dependency file v1.0
+1478121406 source:/home/andrija/Documents/git/numdisPhysicsEngine/DemoProgram/main.cpp
+	<iostream>
+	"Simulation.h"
+
+1478174626 /home/andrija/Documents/git/numdisPhysicsEngine/DemoProgram/Simulation.h
+	"../ndPE/World.h"
+	"../ndGE/Window.h"
+
+1478121406 /home/andrija/Documents/git/numdisPhysicsEngine/ndPE/World.h
+	<list>
+	"Object.h"
+
+1478121406 /home/andrija/Documents/git/numdisPhysicsEngine/ndPE/Object.h
+	<list>
+
+1478121406 /home/andrija/Documents/git/numdisPhysicsEngine/ndGE/Window.h
+
+1478121406 source:/home/andrija/Documents/git/numdisPhysicsEngine/DemoProgram/Simulation.cpp
+	"Simulation.h"
+

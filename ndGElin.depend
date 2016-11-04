@@ -1,0 +1,7 @@
+# depslib dependency file v1.0
+1478121406 source:/home/andrija/Documents/git/numdisPhysicsEngine/ndGE/Window.cpp
+	<iostream>
+	"Window.h"
+
+1478121406 /home/andrija/Documents/git/numdisPhysicsEngine/ndGE/Window.h
+

@@ -6,39 +6,43 @@
 
 namespace ndGE {
 
-    //Camera class for 2D simulations
+    /**
+     * Camera class for 2D simulations
+     */
     class Camera2D
     {
     public:
-        Camera2D();
+        Camera2D(int screenWidth = 500, int screenHeight = 500);
         ~Camera2D();
 
-        //sets up the orthographic matrix and screen dimensions
-        void init(int screenWidth, int screenHeight);
+        void init(int screenWidth, int screenHeight);   //!<sets up the orthographic matrix and screen dimensions
 
-        //updates the camera matrix if needed
-        void update();
+        void update();                                  //!<updates the camera matrix if needed
 
-        glm::vec2 convertScreenToWorld(glm::vec2 screenCoords);
+        glm::vec2 convertScreenToWorld(glm::vec2 screenCoords); //!< Converts screen to world coordinates
 
-        bool isBoxInView(const glm::vec2& position, const glm::vec2& dimensions);
+        bool isBoxInView(const glm::vec2& position, const glm::vec2& dimensions); //!< Check if box is in view
 
-        //setters
+        /** Set camera position */
         void setPosition(const glm::vec2& newPosition) { _position = newPosition; _needsMatrixUpdate = true; }
+        /** Set camera scale */
         void setScale(float newScale) { _scale = newScale; _needsMatrixUpdate = true; }
 
-        //getters
+        /** Get camera position */
         glm::vec2 getPosition() { return _position; }
+        /** Get camera scale */
         float getScale() { return _scale; }
+        /** Get camera matrix */
         glm::mat4 getCameraMatrix() { return _cameraMatrix; }
 
     private:
-        int _screenWidth, _screenHeight;
-        bool _needsMatrixUpdate;
-        float _scale;
-        glm::vec2 _position;
-        glm::mat4 _cameraMatrix;
-        glm::mat4 _orthoMatrix;
+        int _screenWidth;           //!< Screen width
+        int _screenHeight;          //!< Screen height
+        bool _needsMatrixUpdate;    //!< If some camera properties were changer, matrix will need update
+        float _scale;               //!< Camera scale
+        glm::vec2 _position;        //!< Camera position
+        glm::mat4 _cameraMatrix;    //!< Camera matrix
+        glm::mat4 _orthoMatrix;     //!< Camera orthographic matrix
     };
 
 }

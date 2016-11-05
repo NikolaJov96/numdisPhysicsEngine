@@ -7,53 +7,57 @@
 
 #include "../ndGE/ndGE.h"
 #include "../ndGE/ErrorHandler.h"
+#include "../ndGE/Timing.h"
 
-Simulation::Simulation() : _scrWidth(720), _scrHeight(360), _fps(0), _runState(RUN) {};
+Simulation::Simulation() :
+    _scrWidth(720),
+    _scrHeight(360),
+    _fps(0),
+    _runState(simState::RUN)
+    {};
 
 Simulation::~Simulation(){};
 
 void Simulation::run()
 {
-    std::cout <<"Init Simulation Systems" <<std::endl;
     initSystems();
-    std::cout <<"Simulation Loop" <<std::endl;
     loop();
 }
 
 void Simulation::initSystems()
 {
-
-    ndGE::init();
-    _window.create("Sim", _scrWidth, _scrHeight);
+    ndGE::init(); // we'll see
+    _window = new ndGE::Window("Sim", _scrWidth, _scrHeight);  // not sure
     initShaders();
     // init sprite batch
-    _camera.init(_scrWidth, _scrHeight);
-    _camera.setPosition(glm::vec2(_scrWidth / 2, _scrHeight / 2));
+    _camera.init(_scrWidth, _scrHeight);                            // Set camera width and height
+    _camera.setPosition(glm::vec2(_scrWidth / 2, _scrHeight / 2));  // Set camera center position (center of screen)
 
-    _world.makeObject(ndPE::ObjectTypes::BALL);
+    _world.makeObject(ndPE::ObjectTypes::BALL);                     // Create demo object
 }
 
 void Simulation::loop()
 {
-    // fps stuff
-    // Set previousTicks variable
-    // float previousTicks = SDL_GetTicks();
-    while (_runState == RUN)
+    ndGE::FpsLimiter fpsLimiter;                // Create FPS limiter object (with 60 FPS desired FPS value)
+    while (_runState == simState::RUN)
     {
-        // Calculate the frameTime in milliseconds
-        // float newTicks = SDL_GetTicks();
-        // float frameTime = newTicks - previousTicks;
-        // previousTicks = newTicks;
-        processInput();
-        drawFrame();
-        // fps stuff
+        fpsLimiter.begin();                     // Indicate beginning of the iteration to the fpsLimiter
+        processInput();                         // Update input manager
+        // manually update the world
+        // world auto update (without collision resolving)
+        // get collisions
+        // manual collision resolving
+        // automatic collision resolving
+        drawFrame();                            // Draw next frame
+
+        _fps = fpsLimiter.end();                // Indicate the end of the iteration to the fpsLimiter
+        std::cout <<_fps <<std::endl;
     }
 }
 
 void Simulation::initShaders()
 {
-    std::cout <<"Shaders inited, maybe" <<std::endl;
-    // Compile our color shader
+    // Compile color shader
     _textureProgram.compileShaders("Shaders/textureShading.vert", "Shaders/textureShading.frag");
     _textureProgram.addAttribute("vertexPosition");
     _textureProgram.addAttribute("vertexColor");
@@ -63,13 +67,14 @@ void Simulation::initShaders()
 
 void Simulation::processInput()
 {
+    // Update input manager
     SDL_Event event;
     while (SDL_PollEvent(&event))
     {
         switch (event.type)
         {
         case SDL_QUIT:
-            _runState = STOP;
+            _runState = simState::STOP;
             break;
         }
     }
@@ -77,54 +82,54 @@ void Simulation::processInput()
 
 void Simulation::drawFrame()
 {
-    // move to ndGE ! (black magic, proceed with caution!)
-/*
+    // should be moved to ndGE
+
     // Set the base depth to 1.0
     glClearDepth(1.0);
     // Clear the color and depth buffer
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
+/*
     // Apply shaderss
-    m_textureProgram.use();
+    _textureProgram.use();
 
     // Draw code goes here
     glActiveTexture(GL_TEXTURE0);
 
     // Make sure the shader uses texture 0
-    GLint textureUniform = m_textureProgram.getUniformLocation("mySampler");
+    GLint textureUniform = _textureProgram.getUniformLocation("mySampler");
     glUniform1i(textureUniform, 0);
 
     // Grab the camera matrix
-    glm::mat4 projectionMatrix = m_camera.getCameraMatrix();
+    glm::mat4 projectionMatrix = _camera.getCameraMatrix();
     // Get uniform matrix form shader
-    GLint pUniform = m_textureProgram.getUniformLocation("P");
+    GLint pUniform = _textureProgram.getUniformLocation("P");
     // Send it back
     glUniformMatrix4fv(pUniform, 1, GL_FALSE, &projectionMatrix[0][0]);
 
     // Draw the background
-    m_levels[m_currentLevel]->draw();
+    // _levels[_currentLevel]->draw();
 
     // Begin drawing agents (objects in simulation)
-    m_agentSpriteBatch.begin();
+    _agentSpriteBatch.begin();
 
-    m_grid.draw(m_agentSpriteBatch, m_camera);
+    _grid.draw(_agentSpriteBatch, _camera);
 
     // End spritebatch creation
-    m_agentSpriteBatch.end();
+    _agentSpriteBatch.end();
 
     // Render to the screen
-    m_agentSpriteBatch.renderBatch();
+    _agentSpriteBatch.renderBatch();
 
     // Render the particles
-    m_particleEngine.draw(&m_agentSpriteBatch);
+    _particleEngine.draw(&_agentSpriteBatch);
 
     // Render the heads up display (HUD)
     drawHud();
 
     // Unbind the program
-    m_textureProgram.unuse();
-
+    _textureProgram.unuse();
+*/
     // Swap our buffer and draw everything to the screen!
-    m_window.swapBuffer();
-    */
+    _window->swapBuffer();
+
 }

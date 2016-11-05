@@ -1,8 +1,7 @@
 # depslib dependency file v1.0
-1478252129 source:c:\users\nikola\documents\git\numdisphysicsengine\demoprogram\main.cpp
+1478305676 source:c:\users\nikola\documents\git\numdisphysicsengine\demoprogram\main.cpp
 	<iostream>
 	"Simulation.h"
-	<GL/glew.h>
 
 1478048322 c:\users\nikola\documents\git\numdisphysicsengine\demoprogram\demoprogram.h
 	"../ndPE/ndPE.h"
@@ -11,17 +10,18 @@
 1478048240 c:\users\nikola\documents\git\numdisphysicsengine\ndpe\ndpe.h
 	<list>
 
-1478253964 source:c:\users\nikola\documents\git\numdisphysicsengine\demoprogram\simulation.cpp
+1478312120 source:c:\users\nikola\documents\git\numdisphysicsengine\demoprogram\simulation.cpp
 	<iostream>
 	<SDL2/SDL.h>
 	"GL/glew.h"
 	"Simulation.h"
 	"../ndGE/ndGE.h"
 	"../ndGE/ErrorHandler.h"
+	"../ndGE/Timing.h"
 
-1478196161 c:\users\nikola\documents\git\numdisphysicsengine\ndge\ndge.h
+1478307427 c:\users\nikola\documents\git\numdisphysicsengine\ndge\ndge.h
 
-1478252116 c:\users\nikola\documents\git\numdisphysicsengine\demoprogram\simulation.h
+1478304908 c:\users\nikola\documents\git\numdisphysicsengine\demoprogram\simulation.h
 	"../ndPE/World.h"
 	"../ndGE/ndGE.h"
 	"../ndGE/Window.h"
@@ -35,12 +35,11 @@
 1478049485 c:\users\nikola\documents\git\numdisphysicsengine\ndpe\object.h
 	<list>
 
-1478202654 c:\users\nikola\documents\git\numdisphysicsengine\ndge\window.h
-	<Windows.h>
-	<SDL2/SDL.h>
+1478305278 c:\users\nikola\documents\git\numdisphysicsengine\ndge\window.h
 	<string>
+	<SDL2/SDL.h>
 
-1478216780 c:\users\nikola\documents\git\numdisphysicsengine\ndge\camera2d.h
+1478308832 c:\users\nikola\documents\git\numdisphysicsengine\ndge\camera2d.h
 	"glm/glm.hpp"
 	"glm/gtc/matrix_transform.hpp"
 
@@ -522,7 +521,7 @@
 	<iostream>
 	<SDL2/SDL.h>
 
-1478209182 c:\users\nikola\documents\git\numdisphysicsengine\ndge\errorhandler.h
+1478307564 c:\users\nikola\documents\git\numdisphysicsengine\ndge\errorhandler.h
 	<string>
 
 1478210112 c:\users\nikola\documents\git\numdisphysicsengine\proba\main.h
@@ -535,8 +534,10 @@
 	<glm/glm.hpp>
 	<glm/gtc/matrix_transform.hpp>
 
-1478216765 c:\users\nikola\documents\git\numdisphysicsengine\ndge\glslprogram.h
+1478307473 c:\users\nikola\documents\git\numdisphysicsengine\ndge\glslprogram.h
 	<Windows.h>
 	"GL/glew.h"
 	<string>
+
+1478307242 c:\users\nikola\documents\git\numdisphysicsengine\ndge\timing.h
 

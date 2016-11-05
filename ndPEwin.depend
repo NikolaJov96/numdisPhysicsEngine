@@ -1,1 +1,16 @@
 # depslib dependency file v1.0
+1478049265 source:c:\users\nikola\documents\git\numdisphysicsengine\ndpe\object.cpp
+	<iostream>
+	"Object.h"
+
+1478049485 c:\users\nikola\documents\git\numdisphysicsengine\ndpe\object.h
+	<list>
+
+1478049406 source:c:\users\nikola\documents\git\numdisphysicsengine\ndpe\world.cpp
+	<iostream>
+	"World.h"
+
+1478049514 c:\users\nikola\documents\git\numdisphysicsengine\ndpe\world.h
+	<list>
+	"Object.h"
+

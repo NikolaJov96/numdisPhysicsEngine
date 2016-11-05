@@ -1,12 +1,10 @@
 #include <iostream>
 
 #include "Simulation.h"
-#include <GL/glew.h>
 
-int main(int argc, char *argv[])
+int main(int argc, char *argv[])    // int argc, char *argv[] arguments needed for successful compilation
 {
-    std::cout <<"Hello World" <<std::endl;
-    Simulation sim;
-    sim.run();
+    Simulation sim;     // Create simulation
+    sim.run();          // Run simulation
     return 0;
 }

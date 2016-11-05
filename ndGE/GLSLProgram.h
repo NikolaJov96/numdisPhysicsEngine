@@ -8,8 +8,10 @@
 
 namespace ndGE {
 
-    //This class handles the compilation, linking, and usage of a GLSL shader program.
-    //Reference: http://www.opengl.org/wiki/Shader_Compilation
+    /**
+     * This class handles the compilation, linking, and usage of a GLSL shader program.
+     * Reference: http://www.opengl.org/wiki/Shader_Compilation
+     */
     class GLSLProgram
     {
     public:

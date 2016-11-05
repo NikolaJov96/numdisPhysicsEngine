@@ -1,57 +1,9 @@
 # depslib dependency file v1.0
-1478216741 source:c:\users\nikola\documents\git\numdisphysicsengine\ndge\errorhandler.cpp
-	<cstdlib>
-	<iostream>
-	<SDL2/SDL.h>
-	"ErrorHandler.h"
-
-1478209182 c:\users\nikola\documents\git\numdisphysicsengine\ndge\errorhandler.h
-	<string>
-
-1478178898 source:c:\users\nikola\documents\git\numdisphysicsengine\ndge\glslprogram.cpp
-	"GLSLProgram.h"
-	"ErrorHandler.h"
-	<vector>
-	<fstream>
-
-1478216765 c:\users\nikola\documents\git\numdisphysicsengine\ndge\glslprogram.h
-	<Windows.h>
-	"GL/glew.h"
-	<string>
-
-1478196673 c:\users\nikola\documents\git\numdisphysicsengine\deps\include\gl\glew.h
-	<stddef.h>
-	<inttypes.h>
-	<stdint.h>
-	<inttypes.h>
-	<Availability.h>
-	<OpenGL/glu.h>
-	<GL/glu.h>
-
-1478217760 source:c:\users\nikola\documents\git\numdisphysicsengine\ndge\ndge.cpp
-	<iostream>
-	<SDL2/SDL.h>
-	"GL/glew.h"
-	"ndGE.h"
-
-1478196161 c:\users\nikola\documents\git\numdisphysicsengine\ndge\ndge.h
-
-1478216758 source:c:\users\nikola\documents\git\numdisphysicsengine\ndge\window.cpp
-	<iostream>
-	"GL/glew.h"
-	"Window.h"
-	"ErrorHandler.h"
-
-1478202654 c:\users\nikola\documents\git\numdisphysicsengine\ndge\window.h
-	<Windows.h>
-	<SDL2/SDL.h>
-	<string>
-
-1478217913 source:c:\users\nikola\documents\git\numdisphysicsengine\ndge\camera2d.cpp
+1478309026 source:c:\users\nikola\documents\git\numdisphysicsengine\ndge\camera2d.cpp
 	<iostream>
 	"Camera2D.h"
 
-1478216780 c:\users\nikola\documents\git\numdisphysicsengine\ndge\camera2d.h
+1478308832 c:\users\nikola\documents\git\numdisphysicsengine\ndge\camera2d.h
 	"glm/glm.hpp"
 	"glm/gtc/matrix_transform.hpp"
 
@@ -517,4 +469,49 @@
 	"../geometric.hpp"
 	"../trigonometric.hpp"
 	"../matrix.hpp"
+
+1478307598 source:c:\users\nikola\documents\git\numdisphysicsengine\ndge\errorhandler.cpp
+	<cstdlib>
+	<iostream>
+	<SDL2/SDL.h>
+	"ErrorHandler.h"
+
+1478307564 c:\users\nikola\documents\git\numdisphysicsengine\ndge\errorhandler.h
+	<string>
+
+1478308684 source:c:\users\nikola\documents\git\numdisphysicsengine\ndge\glslprogram.cpp
+	<vector>
+	<fstream>
+	"GLSLProgram.h"
+	"ErrorHandler.h"
+
+1478307473 c:\users\nikola\documents\git\numdisphysicsengine\ndge\glslprogram.h
+	<Windows.h>
+	"GL/glew.h"
+	<string>
+
+1478305735 source:c:\users\nikola\documents\git\numdisphysicsengine\ndge\ndge.cpp
+	<iostream>
+	<SDL2/SDL.h>
+	"GL/glew.h"
+	"ndGE.h"
+	"ErrorHandler.h"
+
+1478307427 c:\users\nikola\documents\git\numdisphysicsengine\ndge\ndge.h
+
+1478308643 source:c:\users\nikola\documents\git\numdisphysicsengine\ndge\timing.cpp
+	<SDL2/SDL.h>
+	"Timing.h"
+
+1478307242 c:\users\nikola\documents\git\numdisphysicsengine\ndge\timing.h
+
+1478312058 source:c:\users\nikola\documents\git\numdisphysicsengine\ndge\window.cpp
+	<iostream>
+	"GL/glew.h"
+	"Window.h"
+	"ErrorHandler.h"
+
+1478305278 c:\users\nikola\documents\git\numdisphysicsengine\ndge\window.h
+	<string>
+	<SDL2/SDL.h>
 

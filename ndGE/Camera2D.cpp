@@ -2,22 +2,18 @@
 
 #include "Camera2D.h"
 
-ndGE::Camera2D::Camera2D() :
-    _screenWidth(500),
-    _screenHeight(500),
+ndGE::Camera2D::Camera2D(int screenWidth, int screenHeight) :
+    _screenWidth(screenWidth),
+    _screenHeight(screenHeight),
     _needsMatrixUpdate(true),
     _scale(1.0f),
     _position(0.0f, 0.0f),
     _cameraMatrix(1.0f),
     _orthoMatrix(1.0f)
-{
-    std::cout <<"2D camera created" <<std::endl;
-}
+    {}
 
 
-ndGE::Camera2D::~Camera2D()
-{
-}
+ndGE::Camera2D::~Camera2D(){}
 
 void ndGE::Camera2D::init(int screenWidth, int screenHeight) {
     _screenWidth = screenWidth;
@@ -39,19 +35,15 @@ void ndGE::Camera2D::update() {
         glm::vec3 scale(_scale, _scale, 0.0f);
         _cameraMatrix = glm::scale(glm::mat4(1.0f), scale) * _cameraMatrix;
 
-        _needsMatrixUpdate = false;
+        _needsMatrixUpdate = false;     // Matrix just updated
     }
 }
 
 glm::vec2 ndGE::Camera2D::convertScreenToWorld(glm::vec2 screenCoords) {
-    // Invert Y direction
-    screenCoords.y = _screenHeight - screenCoords.y;
-    // Make it so that 0 is the center
-    screenCoords -= glm::vec2(_screenWidth / 2, _screenHeight / 2);
-    // Scale the coordinates
-    screenCoords /= _scale;
-    // Translate with the camera position
-    screenCoords += _position;
+    screenCoords.y = _screenHeight - screenCoords.y;                    // Invert Y direction
+    screenCoords -= glm::vec2(_screenWidth / 2, _screenHeight / 2);     // Make it so that 0 is the center
+    screenCoords /= _scale;                                             // Scale the coordinates
+    screenCoords += _position;                                          // Translate with the camera position
     return screenCoords;
 }
 

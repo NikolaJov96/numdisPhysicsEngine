@@ -1,15 +1,14 @@
 #include <cstdlib>
 #include <iostream>
+
 #include <SDL2/SDL.h>
 
 #include "ErrorHandler.h"
 
-
-void ndGE::fatalError(std::string message)
+void ndGE::fatalError(const std::string &message)
 {
     std::cout <<message <<std::endl;
-    std::cout <<"Enter any key to quit...";
-    std::cin >> message;
+    std::cout <<"Quiting...";
     SDL_Quit();
     exit(1);
 }

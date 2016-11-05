@@ -4,9 +4,7 @@
 #include <string>
 
 namespace ndGE {
-
-    extern void fatalError(std::string message);
-
+    extern void fatalError(const std::string &message);    //!< Prints error message, quits SDL and program
 }
 
 #endif // ERRORHANDLER_H

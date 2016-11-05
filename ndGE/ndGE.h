@@ -2,7 +2,7 @@
 #define NDGE_H
 
 namespace ndGE {
-    extern void init();
+    extern void init();     //!< Initializes SDL
 }
 
 #endif // NDGE_H

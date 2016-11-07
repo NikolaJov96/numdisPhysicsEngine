@@ -1,21 +1,93 @@
 # depslib dependency file v1.0
-1478121406 source:/home/andrija/Documents/git/numdisPhysicsEngine/DemoProgram/main.cpp
+1478332539 source:/home/andrija/Documents/git/numdisPhysicsEngine/DemoProgram/main.cpp
 	<iostream>
 	"Simulation.h"
 
-1478174626 /home/andrija/Documents/git/numdisPhysicsEngine/DemoProgram/Simulation.h
+1478332539 /home/andrija/Documents/git/numdisPhysicsEngine/DemoProgram/Simulation.h
 	"../ndPE/World.h"
+	"../ndGE/ndGE.h"
 	"../ndGE/Window.h"
+	"../ndGE/Camera2D.h"
+	"../ndGE/GLSLProgram.h"
 
-1478121406 /home/andrija/Documents/git/numdisPhysicsEngine/ndPE/World.h
+1478183482 /home/andrija/Documents/git/numdisPhysicsEngine/ndPE/World.h
 	<list>
 	"Object.h"
 
-1478121406 /home/andrija/Documents/git/numdisPhysicsEngine/ndPE/Object.h
+1478183482 /home/andrija/Documents/git/numdisPhysicsEngine/ndPE/Object.h
 	<list>
 
-1478121406 /home/andrija/Documents/git/numdisPhysicsEngine/ndGE/Window.h
+1478332539 /home/andrija/Documents/git/numdisPhysicsEngine/ndGE/Window.h
+	<string>
+	<SDL2/SDL.h>
 
-1478121406 source:/home/andrija/Documents/git/numdisPhysicsEngine/DemoProgram/Simulation.cpp
+1478332539 source:/home/andrija/Documents/git/numdisPhysicsEngine/DemoProgram/Simulation.cpp
+	<iostream>
+	<SDL2/SDL.h>
+	"GL/glew.h"
 	"Simulation.h"
+	"../ndGE/ndGE.h"
+	"../ndGE/ErrorHandler.h"
+	"../ndGE/Timing.h"
+
+1478332539 source:/home/andrija/Documents/git/numdisPhysicsEngine (copy 2)/DemoProgram/main.cpp
+	<iostream>
+	"Simulation.h"
+
+1478332539 /home/andrija/Documents/git/numdisPhysicsEngine (copy 2)/DemoProgram/Simulation.h
+	"../ndPE/World.h"
+	"../ndGE/ndGE.h"
+	"../ndGE/Window.h"
+	"../ndGE/Camera2D.h"
+	"../ndGE/GLSLProgram.h"
+
+1478183482 /home/andrija/Documents/git/numdisPhysicsEngine (copy 2)/ndPE/World.h
+	<list>
+	"Object.h"
+
+1478183482 /home/andrija/Documents/git/numdisPhysicsEngine (copy 2)/ndPE/Object.h
+	<list>
+
+1478332539 /home/andrija/Documents/git/numdisPhysicsEngine (copy 2)/ndGE/ndGE.h
+
+1478332539 /home/andrija/Documents/git/numdisPhysicsEngine (copy 2)/ndGE/Window.h
+	<string>
+	<SDL2/SDL.h>
+
+1478332539 /home/andrija/Documents/git/numdisPhysicsEngine (copy 2)/ndGE/Camera2D.h
+	"glm/glm.hpp"
+	"glm/gtc/matrix_transform.hpp"
+
+1478521004 /home/andrija/Documents/git/numdisPhysicsEngine (copy 2)/ndGE/GLSLProgram.h
+	"GL/glew.h"
+	<string>
+
+1478332539 source:/home/andrija/Documents/git/numdisPhysicsEngine (copy 2)/DemoProgram/Simulation.cpp
+	<iostream>
+	<SDL2/SDL.h>
+	"GL/glew.h"
+	"Simulation.h"
+	"../ndGE/ndGE.h"
+	"../ndGE/ErrorHandler.h"
+	"../ndGE/Timing.h"
+
+1478332539 /home/andrija/Documents/git/numdisPhysicsEngine (copy 2)/ndGE/ErrorHandler.h
+	<string>
+
+1478332539 /home/andrija/Documents/git/numdisPhysicsEngine (copy 2)/ndGE/Timing.h
+
+1478332539 /home/andrija/Documents/git/numdisPhysicsEngine/ndGE/ndGE.h
+
+1478332539 /home/andrija/Documents/git/numdisPhysicsEngine/ndGE/Camera2D.h
+	"glm/glm.hpp"
+	"glm/gtc/matrix_transform.hpp"
+
+1478521004 /home/andrija/Documents/git/numdisPhysicsEngine/ndGE/GLSLProgram.h
+	"GL/glew.h"
+	<string>
+
+1478332539 /home/andrija/Documents/git/numdisPhysicsEngine/ndGE/ErrorHandler.h
+	<string>
+
+1478332539 /home/andrija/Documents/git/numdisPhysicsEngine/ndGE/Timing.h
 

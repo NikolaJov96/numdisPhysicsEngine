@@ -5,3 +5,20 @@
 
 1478121406 /home/andrija/Documents/git/numdisPhysicsEngine/ndGE/Window.h
 
+1478298262 source:/home/andrija/Documents/git/numdisPhysicsEngine/ndGE/Camera2D.cpp
+	<iostream>
+	"Camera2D.h"
+
+1478298262 /home/andrija/Documents/git/numdisPhysicsEngine/ndGE/Camera2D.h
+	"glm/glm.hpp"
+	"glm/gtc/matrix_transform.hpp"
+
+1478298262 source:/home/andrija/Documents/git/numdisPhysicsEngine/ndGE/ErrorHandler.cpp
+	<cstdlib>
+	<iostream>
+	<SDL2/SDL.h>
+	"ErrorHandler.h"
+
+1478298262 /home/andrija/Documents/git/numdisPhysicsEngine/ndGE/ErrorHandler.h
+	<string>
+

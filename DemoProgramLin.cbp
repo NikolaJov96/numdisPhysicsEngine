@@ -19,6 +19,11 @@
 				<Linker>
 					<Add library="ndGE/linBin/Debug/ndGElin.so" />
 					<Add library="ndPE/linBin/Debug/ndPElin.so" />
+					<Add library="SDL2main" />
+					<Add library="SDL2" />
+					<Add library="GLEW" />
+					<Add library="GLU" />
+					<Add library="GL" />
 				</Linker>
 			</Target>
 			<Target title="Release">

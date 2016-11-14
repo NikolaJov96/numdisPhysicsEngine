@@ -1,5 +1,5 @@
 #include <iostream>
-
+#include <vector>
 #include <SDL2/SDL.h>
 #include <GL/glew.h>
 
@@ -9,12 +9,16 @@
 #include "../ndGE/ErrorHandler.h"
 #include "../ndGE/Timing.h"
 
+#include "../ndPE/Object.h"
+#include "../ndPE/World.h"
+
+ndPE::Object *cubeObj, *ballObj;
+
 Simulation::Simulation() :
     _scrWidth(720),
     _scrHeight(360),
     _fps(0),
-    _runState(simState::RUN),
-    _camera()
+    _runState(simState::RUN)
     {};
 
 Simulation::~Simulation(){};
@@ -28,9 +32,12 @@ void Simulation::run()
 void Simulation::initSystems()
 {
     ndGE::init(); // we'll see
-    _window = new ndGE::Window("Sim", _scrWidth, _scrHeight);  // not sure
+    _window = new ndGE::Window("Sim", _scrWidth, _scrHeight);
+    _window->addShape("res/cube.shp");
+    _window->addShape("res/ball.shp");
 
-    _world.makeObject(ndPE::ObjectTypes::BALL);                     // Create demo object
+    cubeObj = _world.makeObject(2.0f, 0.0f, -4.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.5f, 0.5f, ndPE::ObjectTypes::CUBE);
+    ballObj = _world.makeObject(-2.0f, 0.0f, -4.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, ndPE::ObjectTypes::BALL);
 }
 
 void Simulation::loop()
@@ -41,6 +48,8 @@ void Simulation::loop()
         fpsLimiter.begin();                     // Indicate beginning of the iteration to the fpsLimiter
         processInput();                         // Update input manager
         // manually update the world
+        cubeObj->setAngle(((int)cubeObj->getAngle() + 1) % 360);
+        ballObj->setAngle(((int)ballObj->getAngle() + 1) % 360);
         // world auto update (without collision resolving)
         // get collisions
         // manual collision resolving
@@ -48,7 +57,7 @@ void Simulation::loop()
         drawFrame();                            // Draw next frame
 
         _fps = fpsLimiter.end();                // Indicate the end of the iteration to the fpsLimiter
-        std::cout <<_fps <<std::endl;
+        if ((int)cubeObj->getAngle() % 45 == 0) std::cout <<_fps <<std::endl;
     }
 }
 
@@ -63,60 +72,31 @@ void Simulation::processInput()
         case SDL_QUIT:
             _runState = simState::STOP;
             break;
+        case SDL_KEYUP:
+            switch(event.key.keysym.sym)
+            {
+                case SDLK_w: _window->_camera.updatePosition(0, 0, -1); break;
+                case SDLK_s: _window->_camera.updatePosition(0, 0, 1); break;
+                case SDLK_a: _window->_camera.updatePosition(-1, 0, 0); break;
+                case SDLK_d: _window->_camera.updatePosition(1, 0, 0); break;
+                case SDLK_r: _window->_camera.updatePosition(0, 1, 0); break;
+                case SDLK_f: _window->_camera.updatePosition(0, -1, 0); break;
+                case SDLK_q: _window->_camera.updateViewDirection(10, 0, 1, 0); break;
+                case SDLK_e: _window->_camera.updateViewDirection(-10, 0, 1, 0); break;
+            }
+            break;
         }
     }
 }
 
 void Simulation::drawFrame()
 {
-    // should be moved to ndGE
-
-    // Set the base depth to 1.0
-    glClearDepth(1.0);
-    // Clear the color and depth buffer
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-/*
-    // Apply shaderss
-    _textureProgram.use();
-
-    // Draw code goes here
-    glActiveTexture(GL_TEXTURE0);
-
-    // Make sure the shader uses texture 0
-    GLint textureUniform = _textureProgram.getUniformLocation("mySampler");
-    glUniform1i(textureUniform, 0);
-
-    // Grab the camera matrix
-    glm::mat4 projectionMatrix = _camera.getCameraMatrix();
-    // Get uniform matrix form shader
-    GLint pUniform = _textureProgram.getUniformLocation("P");
-    // Send it back
-    glUniformMatrix4fv(pUniform, 1, GL_FALSE, &projectionMatrix[0][0]);
-
-    // Draw the background
-    // _levels[_currentLevel]->draw();
-
-    // Begin drawing agents (objects in simulation)
-    _agentSpriteBatch.begin();
-
-    _grid.draw(_agentSpriteBatch, _camera);
-
-    // End spritebatch creation
-    _agentSpriteBatch.end();
-
-    // Render to the screen
-    _agentSpriteBatch.renderBatch();
-
-    // Render the particles
-    _particleEngine.draw(&_agentSpriteBatch);
-
-    // Render the heads up display (HUD)
-    drawHud();
-
-    // Unbind the program
-    _textureProgram.unuse();
-*/
-    // Swap our buffer and draw everything to the screen!
-    _window->swapBuffer();
-
+    _window->resetTransformMaritces();
+    for (int i=0; i<_world.getObjectsNum(); i++)
+    {
+        ndPE::Object *obj = _world.getObject(i);
+        if (obj->getType() == ndPE::ObjectTypes::CUBE) _window->addTransformMatrix(0, obj->getParams());
+        if (obj->getType() == ndPE::ObjectTypes::BALL) _window->addTransformMatrix(1, obj->getParams());
+    }
+    _window->drawFrame();
 }

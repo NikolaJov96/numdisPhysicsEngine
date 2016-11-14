@@ -7,7 +7,7 @@
 
 namespace ndPE {
 
-    enum class ObjectTypes {BALL, PRISM};
+    enum class ObjectTypes {CUBE, BALL};
 
     class Object {
     public:
@@ -19,7 +19,7 @@ namespace ndPE {
          * Returns pointer to the _x, which can be used to access
          * all outher atributes needed for transformation matrix
          */
-        const GLfloat *getParams() const { return &_pos.x; }
+        GLfloat *getParams() { return &_pos.x; }
         // getters
         glm::vec3 getPosition() const { return _pos; }
         GLfloat getAngle() const { return _angle; }
@@ -31,6 +31,11 @@ namespace ndPE {
 
         // setters
         void setVelocity(GLfloat vel) { _velocity = vel; }
+        void setPosition(GLfloat x, GLfloat y, GLfloat z)
+            { setPosition(glm::vec3(x, y, z)); }
+        void setPosition(glm::vec3 pos)
+            { _pos = pos; }
+        void setAngle(GLfloat angle) { _angle = angle; }
     private:
         // following 4 lines must remain the same order as listed
         glm::vec3 _pos;         //< Position vector

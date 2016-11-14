@@ -1,3 +1,6 @@
+#ifndef CAMERA_H
+#define CAMERA_H
+
 #include <GL/glew.h>
 #include <glm/glm.hpp>
 #include <glm/gtx/transform.hpp>
@@ -8,11 +11,8 @@ namespace ndGE
     class Camera
     {
     public:
-        Camera() :
-            position(0.0f, 0.0f, 0.0f),
-            viewDirection(0.0f, 0.0f, -1.0f),
-            UP(0.0f, 1.0f, 0.0f)
-            {}
+        Camera();
+        ~Camera() = default;
         // Get position, view direction and world to view matrix
         glm::vec3 getPosition() const { return position; }
         glm::vec3 getViewDirection() const { return viewDirection; }
@@ -54,3 +54,5 @@ namespace ndGE
     };
 
 }
+
+#endif // CAMERA_H

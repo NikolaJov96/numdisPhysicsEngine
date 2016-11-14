@@ -12,7 +12,7 @@
 
 namespace ndGE
 {
-    static ShapeData loadShape(const std::string &file)
+    static ShapeDescription loadShape(const std::string &file)
     {
         std::ifstream inFile(file);
         if (!inFile.is_open())
@@ -20,7 +20,7 @@ namespace ndGE
             std::cout <<"Wrong shape file name: " <<file <<std::endl;
             exit(1);
         }
-        ShapeData ret;
+        ShapeDescription ret;
         inFile >>ret.numVerts >>ret.numInds;
         ret.numInds *= 3;
         std::vector <Vertex> verts;
@@ -121,9 +121,12 @@ namespace ndGE
 
         return programID;
     }
+
 }
 
-ndGE::Window::Window(const std::string &windowName, int width, int height) : _width(width), _height(height)
+ndGE::Window::Window(const std::string &windowName, int width, int height) :
+    _width(width), _height(height),
+    _projectionMatrix(glm::perspective(glm::radians(60.0f), ((float)width) / height, 0.1f, 30.0f))
 {
     _width = width;
     _height = height;
@@ -138,24 +141,107 @@ ndGE::Window::Window(const std::string &windowName, int width, int height) : _wi
     GLenum error = glewInit();                                              // Setup GLEW
     if (error != GLEW_OK) fatalError("Could not initialize GLEW!");
     std::cout <<"OpenGL version: " <<glGetString(GL_VERSION) <<std::endl;   // Print OpenGL version
-    glClearColor(5.0f, 0.0f, 0.0f, 1.0f);                                   // Set background color to black
+    glClearColor(0.0f, 0.2f, 0.0f, 1.0f);                                   // Set background color to black
     SDL_GL_SetSwapInterval(0);                                              // Set VSYNC
     glEnable(GL_BLEND);                                                     // Enable alpha blend
+    glEnable(GL_DEPTH_TEST);                                                // Enable depth test
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);                      // (needed only for textures)
 
-    cube = new ShapeData(loadShape("res/cube.shp"));
-    ball = new ShapeData(loadShape("res/ball.shp"));
-
-    _programID = installShaders();
+    _programID = installShaders();                                              // Load, compile and link shaders and return program ID
 };
 
 ndGE::Window::~Window(){};
 
-void ndGE::Window::swapBuffer()
+int ndGE::Window::getScrW() const { return _width; }
+
+int ndGE::Window::getScrH() const { return _height; }
+
+void ndGE::Window::addShape(const std::string filePath)
 {
-    SDL_GL_SwapWindow(_window);     // Swaps previous with newly rendered buffer
+    Shape *shape = new Shape();
+    shape->desc = new ShapeDescription(loadShape(filePath));
+
+    // Create, bind and allocate vertex buffer
+    glGenBuffers(1, &shape->vertexBufferID);
+    glBindBuffer(GL_ARRAY_BUFFER, shape->vertexBufferID);
+    glBufferData(GL_ARRAY_BUFFER, shape->desc->vertexBufferSize(), shape->desc->vertices, GL_DYNAMIC_DRAW);
+
+    // Describe data inside vertex buffer
+    glEnableVertexAttribArray(0); // position
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6*sizeof(GLfloat), 0);
+    glEnableVertexAttribArray(1); // color (set it using shader)
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6*sizeof(GLfloat), (char*)(sizeof(GLfloat) * 3));
+
+    // Create, bind and load index buffer
+    glGenBuffers(1, &shape->indexBufferID);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, shape->indexBufferID);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, shape->desc->indexBufferSize(), shape->desc->indices, GL_DYNAMIC_DRAW);
+
+    // Init buffer for transformation matrix
+    glGenBuffers(1, &shape->transformationMatrixBufferID);
+    glBindBuffer(GL_ARRAY_BUFFER, shape->transformationMatrixBufferID);
+    // Create empty buffer
+    glBufferData(GL_ARRAY_BUFFER, sizeof(glm::mat4), 0, GL_DYNAMIC_DRAW);
+
+    for (int i=0; i<4; i++)
+    {
+        glVertexAttribPointer(2 + i, 4, GL_FLOAT, GL_FALSE, sizeof(glm::mat4), (void*)(sizeof(GLfloat) * i * 4));
+        glEnableVertexAttribArray(i + 2);
+        glVertexAttribDivisor(i + 2, 1);
+    }
+
+    _shapes.push_back(shape);
+    _fullTransforms.push_back(std::vector<glm::mat4>());
 }
 
-int ndGE::Window::getScrW() { return _width; }
+void ndGE::Window::drawFrame()
+{
+    // Set the base depth to 1.0
+    glClearDepth(1.0);
+    // Clear the color and depth buffer
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-int ndGE::Window::getScrH() { return _height; }
+    for (unsigned i=0; i<_shapes.size(); i++)
+    {
+        glBindBuffer(GL_ARRAY_BUFFER, _shapes[i]->vertexBufferID);
+        glBufferData(GL_ARRAY_BUFFER, _shapes[i]->desc->vertexBufferSize(), _shapes[i]->desc->vertices, GL_DYNAMIC_DRAW);
+        glEnableVertexAttribArray(0); // position
+        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6*sizeof(GLfloat), 0);
+        glEnableVertexAttribArray(1); // color (set it using shader)
+        glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6*sizeof(GLfloat), (char*)(sizeof(GLfloat) * 3));
+
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _shapes[i]->indexBufferID);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, _shapes[i]->desc->indexBufferSize(), _shapes[i]->desc->indices, GL_DYNAMIC_DRAW);
+
+        glBindBuffer(GL_ARRAY_BUFFER, _shapes[i]->transformationMatrixBufferID);
+        // Create empty buffer
+
+        for (int i=0; i<4; i++)
+        {
+            glVertexAttribPointer(2 + i, 4, GL_FLOAT, GL_FALSE, sizeof(glm::mat4), (void*)(sizeof(GLfloat) * i * 4));
+            glEnableVertexAttribArray(i + 2);
+            glVertexAttribDivisor(i + 2, 1);
+        }
+        glBufferData(GL_ARRAY_BUFFER, sizeof(glm::mat4), &_fullTransforms[i][0], GL_DYNAMIC_DRAW);
+
+        glDrawElementsInstanced(GL_TRIANGLES, _shapes[i]->desc->numInds, GL_UNSIGNED_SHORT, 0, _fullTransforms[i].size());
+    }
+
+    // Swap our buffer and draw everything to the screen
+    SDL_GL_SwapWindow(_window);
+}
+
+void ndGE::Window::resetTransformMaritces()
+{
+    for (unsigned i=0; i<_fullTransforms.size(); i++)
+        _fullTransforms[i].clear();
+}
+
+void ndGE::Window::addTransformMatrix(int objType, GLfloat *data)
+{
+    _fullTransforms[objType].push_back(
+        _projectionMatrix * _camera.getWorldToViewMatrix() *
+        glm::translate(glm::vec3(data[0], data[1], data[2])) *
+        glm::rotate(glm::radians(data[3]), glm::vec3(data[4], data[5], data[6])) *
+        glm::scale(glm::vec3(data[7], data[8], data[9])));
+}

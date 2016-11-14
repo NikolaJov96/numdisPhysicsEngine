@@ -15,13 +15,13 @@ namespace ndGE {
     };
 
     // Structure which contains information about one object (shape)
-    struct ShapeData
+    struct ShapeDescription
     {
         Vertex *vertices;
         GLuint numVerts;
         GLushort *indices;
         GLuint numInds;
-        ShapeData() : vertices(nullptr), numVerts(0), indices(nullptr), numInds(0) {};
+        ShapeDescription() : vertices(nullptr), numVerts(0), indices(nullptr), numInds(0) {};
         void cleanup()
         {
             delete [] vertices;

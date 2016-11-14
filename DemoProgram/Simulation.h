@@ -27,7 +27,6 @@ private:
     ndPE::World _world;         //!< ndPE world object that contains all information needed for physics simulation
     ndGE::Window *_window;      //!< ndGE object that contains information about application window
     // input manager            //!< ndGE input manager object
-    ndGE::Camera _camera;     //!< ndGE object that controls which part of world will be shown on screen
     // sprite batch             //!< sth we will need for object rendering
 
     int _scrWidth = 720;        //!< Screen width

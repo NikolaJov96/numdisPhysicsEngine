@@ -9,10 +9,19 @@ World::World() : _gravity(0)
     std::cout <<"World created" <<std::endl;
 };
 
-World::~World(){};
-
-
-void World::makeObject(ObjectTypes type)
+World::~World()
 {
-    _objects.push_back(new Object(0, 0, 0, 0, 0, 0, 1, 1, 1, 1, type));
+    while (!_objects.empty())
+    {
+        delete _objects.back();
+        _objects.pop_back();
+    }
+};
+
+Object *World::makeObject(GLfloat x, GLfloat y, GLfloat z, GLfloat angle,
+                        GLfloat rotx, GLfloat roty, GLfloat rotz, GLfloat scx,
+                        GLfloat scy, GLfloat scz, ObjectTypes type)
+{
+    _objects.push_back(new Object(x, y, z, angle, rotx, roty, rotz, scx, scy, scz, type));
+    return _objects.back();
 }

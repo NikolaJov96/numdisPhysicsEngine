@@ -1,7 +1,7 @@
 #ifndef WORLD_H
 #define WORLD_H
 
-#include <list>
+#include <vector>
 
 #include "Object.h"
 
@@ -11,9 +11,13 @@ namespace ndPE {
     public:
         World();
         ~World();
-        void makeObject(ObjectTypes type);
+        Object *makeObject(GLfloat x, GLfloat y, GLfloat z, GLfloat angle,
+                           GLfloat rotx, GLfloat roty, GLfloat rotz, GLfloat scx,
+                           GLfloat scy, GLfloat scz, ObjectTypes type);
+        Object *getObject(int ID) const { return _objects[ID]; }
+        int getObjectsNum() { return _objects.size(); }
     private:
-        std::list<Object*> _objects;
+        std::vector<Object*> _objects;
         float _gravity;
     };
 

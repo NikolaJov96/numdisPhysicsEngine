@@ -45,12 +45,12 @@
 				</Linker>
 			</Target>
 		</Build>
-		<Unit filename="ndGE/Camera2D.cpp" />
-		<Unit filename="ndGE/Camera2D.h" />
+		<Unit filename="ndGE/Camera.cpp" />
+		<Unit filename="ndGE/Camera.h" />
 		<Unit filename="ndGE/ErrorHandler.cpp" />
 		<Unit filename="ndGE/ErrorHandler.h" />
-		<Unit filename="ndGE/GLSLProgram.cpp" />
-		<Unit filename="ndGE/GLSLProgram.h" />
+		<Unit filename="ndGE/Timing.cpp" />
+		<Unit filename="ndGE/Timing.h" />
 		<Unit filename="ndGE/Window.cpp" />
 		<Unit filename="ndGE/Window.h" />
 		<Unit filename="ndGE/ndGE.cpp" />

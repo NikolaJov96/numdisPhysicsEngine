@@ -1,7 +1,7 @@
 #include <iostream>
 
 #include <SDL2/SDL.h>
-#include "GL/glew.h"
+#include <GL/glew.h>
 
 #include "Simulation.h"
 
@@ -13,7 +13,8 @@ Simulation::Simulation() :
     _scrWidth(720),
     _scrHeight(360),
     _fps(0),
-    _runState(simState::RUN)
+    _runState(simState::RUN),
+    _camera()
     {};
 
 Simulation::~Simulation(){};
@@ -28,10 +29,6 @@ void Simulation::initSystems()
 {
     ndGE::init(); // we'll see
     _window = new ndGE::Window("Sim", _scrWidth, _scrHeight);  // not sure
-    initShaders();
-    // init sprite batch
-    _camera.init(_scrWidth, _scrHeight);                            // Set camera width and height
-    _camera.setPosition(glm::vec2(_scrWidth / 2, _scrHeight / 2));  // Set camera center position (center of screen)
 
     _world.makeObject(ndPE::ObjectTypes::BALL);                     // Create demo object
 }
@@ -53,16 +50,6 @@ void Simulation::loop()
         _fps = fpsLimiter.end();                // Indicate the end of the iteration to the fpsLimiter
         std::cout <<_fps <<std::endl;
     }
-}
-
-void Simulation::initShaders()
-{
-    // Compile color shader
-    _textureProgram.compileShaders("Shaders/textureShading.vert", "Shaders/textureShading.frag");
-    _textureProgram.addAttribute("vertexPosition");
-    _textureProgram.addAttribute("vertexColor");
-    _textureProgram.addAttribute("vertexUV");
-    _textureProgram.linkShaders();
 }
 
 void Simulation::processInput()

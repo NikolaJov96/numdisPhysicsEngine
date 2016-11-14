@@ -1,9 +1,20 @@
 # depslib dependency file v1.0
-1478121406 source:/home/andrija/Documents/git/numdisPhysicsEngine/ndGE/Window.cpp
+1479125100 source:/home/andrija/Documents/git/numdisPhysicsEngine/ndGE/Window.cpp
 	<iostream>
+	<string>
+	<vector>
+	<fstream>
+	<sstream>
+	<GL/glew.h>
+	<glm/glm.hpp>
+	"ndGE.h"
 	"Window.h"
+	"ErrorHandler.h"
 
-1478121406 /home/andrija/Documents/git/numdisPhysicsEngine/ndGE/Window.h
+1479124771 /home/andrija/Documents/git/numdisPhysicsEngine/ndGE/Window.h
+	<string>
+	<SDL2/SDL.h>
+	"ndGE.h"
 
 1478298262 source:/home/andrija/Documents/git/numdisPhysicsEngine/ndGE/Camera2D.cpp
 	<iostream>
@@ -13,12 +24,48 @@
 	"glm/glm.hpp"
 	"glm/gtc/matrix_transform.hpp"
 
-1478298262 source:/home/andrija/Documents/git/numdisPhysicsEngine/ndGE/ErrorHandler.cpp
+1478332539 source:/home/andrija/Documents/git/numdisPhysicsEngine/ndGE/ErrorHandler.cpp
 	<cstdlib>
 	<iostream>
 	<SDL2/SDL.h>
 	"ErrorHandler.h"
 
-1478298262 /home/andrija/Documents/git/numdisPhysicsEngine/ndGE/ErrorHandler.h
+1478332539 /home/andrija/Documents/git/numdisPhysicsEngine/ndGE/ErrorHandler.h
 	<string>
+
+1478332539 source:/home/andrija/Documents/git/numdisPhysicsEngine/ndGE/GLSLProgram.cpp
+	<vector>
+	<fstream>
+	"GLSLProgram.h"
+	"ErrorHandler.h"
+
+1478521004 /home/andrija/Documents/git/numdisPhysicsEngine/ndGE/GLSLProgram.h
+	"GL/glew.h"
+	<string>
+
+1479120130 source:/home/andrija/Documents/git/numdisPhysicsEngine/ndGE/ndGE.cpp
+	<iostream>
+	<SDL2/SDL.h>
+	"GL/glew.h"
+	"ndGE.h"
+	"ErrorHandler.h"
+
+1479123263 /home/andrija/Documents/git/numdisPhysicsEngine/ndGE/ndGE.h
+	<GL/glew.h>
+	<glm/glm.hpp>
+
+1478332539 source:/home/andrija/Documents/git/numdisPhysicsEngine/ndGE/Timing.cpp
+	<SDL2/SDL.h>
+	"Timing.h"
+
+1478332539 /home/andrija/Documents/git/numdisPhysicsEngine/ndGE/Timing.h
+
+1479123765 source:/home/andrija/Documents/git/numdisPhysicsEngine/ndGE/Camera.cpp
+	<iostream>
+	"Camera.h"
+
+1479123955 /home/andrija/Documents/git/numdisPhysicsEngine/ndGE/Camera.h
+	<GL/glew.h>
+	<glm/glm.hpp>
+	<glm/gtx/transform.hpp>
 

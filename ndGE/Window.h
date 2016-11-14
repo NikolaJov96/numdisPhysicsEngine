@@ -2,8 +2,9 @@
 #define WINDOW_H
 
 #include <string>
-
 #include <SDL2/SDL.h>
+
+#include "ndGE.h"
 
 namespace ndGE {
 
@@ -21,6 +22,8 @@ namespace ndGE {
         int _width;             //!< Screen width
         int _height;            //!< Screen height
         SDL_Window *_window;    //!< SDL window object
+        ShapeData *cube, *ball;
+        GLuint _programID;
     };
 
 }

@@ -541,3 +541,36 @@
 
 1478307242 c:\users\nikola\documents\git\numdisphysicsengine\ndge\timing.h
 
+1478332538 source:c:\users\nikola\desktop\testing\numdisphysicsengine\demoprogram\main.cpp
+	<iostream>
+	"Simulation.h"
+
+1479125266 c:\users\nikola\desktop\testing\numdisphysicsengine\demoprogram\simulation.h
+	"../ndPE/World.h"
+	"../ndGE/ndGE.h"
+	"../ndGE/Window.h"
+	"../ndGE/Camera.h"
+
+1479120998 c:\users\nikola\desktop\testing\numdisphysicsengine\ndpe\world.h
+	<list>
+	"Object.h"
+
+1479123588 c:\users\nikola\desktop\testing\numdisphysicsengine\ndpe\object.h
+	<list>
+	<GL/glew.h>
+	<glm/glm.hpp>
+
+1479123262 c:\users\nikola\desktop\testing\numdisphysicsengine\ndge\ndge.h
+	<GL/glew.h>
+	<glm/glm.hpp>
+
+1479124770 c:\users\nikola\desktop\testing\numdisphysicsengine\ndge\window.h
+	<string>
+	<SDL2/SDL.h>
+	"ndGE.h"
+
+1479123954 c:\users\nikola\desktop\testing\numdisphysicsengine\ndge\camera.h
+	<GL/glew.h>
+	<glm/glm.hpp>
+	<glm/gtx/transform.hpp>
+

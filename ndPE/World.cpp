@@ -14,5 +14,5 @@ World::~World(){};
 
 void World::makeObject(ObjectTypes type)
 {
-    _objects.push_back(new Object(type));
+    _objects.push_back(new Object(0, 0, 0, 0, 0, 0, 1, 1, 1, 1, type));
 }

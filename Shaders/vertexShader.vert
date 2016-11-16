@@ -1,8 +1,8 @@
 #version 430
 
-in layout(location=0) vec3 position;
-in layout(location=1) vec3 vertexColor;
-in layout(location=2) mat4 fullTransformMatrix;
+in vec3 position;               //layout(location=0)
+in vec3 vertexColor;            //layout(location=1)
+in mat4 fullTransformMatrix;   //layout(location=2) // (2,3,4 and 5)
 
 out vec3 theColor;
 

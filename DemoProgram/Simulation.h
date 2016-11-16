@@ -2,10 +2,10 @@
 #define SIMULATION_H
 
 #include "../ndPE/World.h"
-
 #include "../ndGE/ndGE.h"
 #include "../ndGE/Window.h"
 #include "../ndGE/Camera.h"
+#include "../ndGE/InputManager.h"
 
 /**
  * Simulation class, which uses ndGE and ndPE to generate example simulation
@@ -21,13 +21,15 @@ private:
     void initSystems();         //!< Initializes simulation
     void initShaders();         //!< Loads two shader programs
     void loop();                //!< Main simulation loop
-    void processInput();        //!< Update ndGE input manager
+    void getInput();            //!< Update ndGE input manager
     void drawFrame();           //!< Draws next frame to screen
-    // void drawHUD(); //
+    void manualUpdate();        //!< Make changes at the start of every frame
     ndPE::World _world;         //!< ndPE world object that contains all information needed for physics simulation
     ndGE::Window *_window;      //!< ndGE object that contains information about application window
-    // input manager            //!< ndGE input manager object
-    // sprite batch             //!< sth we will need for object rendering
+    ndGE::InputManager _input;  //!< ndGE input manager object
+
+    const float CAMERA_TRANSLATION_SPEED = 0.1f;    //!< Camera translation speed in units (meters) per second
+    const float CAMERA_ROTATION_SPEED = 2.0f;       //!< Camera rotation speed in degrees per second
 
     int _scrWidth = 720;        //!< Screen width
     int _scrHeight = 360;       //!< Screen height

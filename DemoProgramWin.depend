@@ -10,38 +10,35 @@
 1478048240 c:\users\nikola\documents\git\numdisphysicsengine\ndpe\ndpe.h
 	<list>
 
-1479165773 source:c:\users\nikola\documents\git\numdisphysicsengine\demoprogram\simulation.cpp
+1479254300 source:c:\users\nikola\documents\git\numdisphysicsengine\demoprogram\simulation.cpp
+	"Simulation.h"
 	<iostream>
-	<vector>
 	<SDL2/SDL.h>
 	<GL/glew.h>
-	"Simulation.h"
-	"../ndGE/ndGE.h"
-	"../ndGE/ErrorHandler.h"
-	"../ndGE/Timing.h"
 	"../ndPE/Object.h"
-	"../ndPE/World.h"
+	"../ndGE/Timing.h"
 
-1479131257 c:\users\nikola\documents\git\numdisphysicsengine\ndge\ndge.h
+1479253304 c:\users\nikola\documents\git\numdisphysicsengine\ndge\ndge.h
+	<string>
 	<GL/glew.h>
 	<glm/glm.hpp>
 
-1479127231 c:\users\nikola\documents\git\numdisphysicsengine\demoprogram\simulation.h
+1479254121 c:\users\nikola\documents\git\numdisphysicsengine\demoprogram\simulation.h
 	"../ndPE/World.h"
 	"../ndGE/ndGE.h"
 	"../ndGE/Window.h"
 	"../ndGE/Camera.h"
+	"../ndGE/InputManager.h"
 
-1479164638 c:\users\nikola\documents\git\numdisphysicsengine\ndpe\world.h
+1479253461 c:\users\nikola\documents\git\numdisphysicsengine\ndpe\world.h
 	<vector>
 	"Object.h"
 
-1479164993 c:\users\nikola\documents\git\numdisphysicsengine\ndpe\object.h
-	<list>
+1479254057 c:\users\nikola\documents\git\numdisphysicsengine\ndpe\object.h
 	<GL/glew.h>
 	<glm/glm.hpp>
 
-1479161471 c:\users\nikola\documents\git\numdisphysicsengine\ndge\window.h
+1479252023 c:\users\nikola\documents\git\numdisphysicsengine\ndge\window.h
 	<string>
 	<vector>
 	<SDL2/SDL.h>
@@ -584,8 +581,12 @@
 	<glm/glm.hpp>
 	<glm/gtx/transform.hpp>
 
-1479128571 c:\users\nikola\documents\git\numdisphysicsengine\ndge\camera.h
+1479253310 c:\users\nikola\documents\git\numdisphysicsengine\ndge\camera.h
 	<GL/glew.h>
 	<glm/glm.hpp>
 	<glm/gtx/transform.hpp>
+
+1479241663 c:\users\nikola\documents\git\numdisphysicsengine\ndge\inputmanager.h
+	<unordered_map>
+	<glm/glm.hpp>
 

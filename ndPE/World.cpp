@@ -1,16 +1,15 @@
-#include <iostream>
-
 #include "World.h"
 
-using namespace ndPE;
+#include <iostream>
 
-World::World() : _gravity(0)
+ndPE::World::World() : _gravity(0)
 {
     std::cout <<"World created" <<std::endl;
 };
 
-World::~World()
+ndPE::World::~World()
 {
+    // Free all objects
     while (!_objects.empty())
     {
         delete _objects.back();
@@ -18,10 +17,11 @@ World::~World()
     }
 };
 
-Object *World::makeObject(GLfloat x, GLfloat y, GLfloat z, GLfloat angle,
-                        GLfloat rotx, GLfloat roty, GLfloat rotz, GLfloat scx,
-                        GLfloat scy, GLfloat scz, ObjectTypes type)
+ndPE::Object *ndPE::World::makeObject(GLfloat x, GLfloat y, GLfloat z, GLfloat angle,
+                                      GLfloat rotx, GLfloat roty, GLfloat rotz, GLfloat scx,
+                                      GLfloat scy, GLfloat scz, ObjectTypes type)
 {
+    // Add object and return pointer to it
     _objects.push_back(new Object(x, y, z, angle, rotx, roty, rotz, scx, scy, scz, type));
     return _objects.back();
 }

@@ -1,6 +1,6 @@
-#include <SDL2/SDL.h>
-
 #include "Timing.h"
+
+#include <SDL2/SDL.h>
 
 ndGE::FpsLimiter::FpsLimiter(float maxFPS) : _maxFPS(maxFPS) {}
 
@@ -24,41 +24,41 @@ float ndGE::FpsLimiter::end()
 
 void ndGE::FpsLimiter::calculateFPS()
 {
-    //Stores all the frametimes for each frame that we will average
+    // Stores all the frame times for each frame to average
     static float frameTimes[NUM_SAMPLES];
-    //The current frame we are on
+    // The current frame we are on
     static int currentFrame = 0;
-    //the ticks of the previous frame
+    // The ticks of the previous frame
     static Uint32 prevTicks = SDL_GetTicks();
 
-    //Ticks for the current frame
+    // Ticks for the current frame
     Uint32 currentTicks = SDL_GetTicks();
 
-    //Calculate the number of ticks (ms) for this frame
+    // Calculate the number of ticks (ms) for this frame
     _frameTime = (float)(currentTicks - prevTicks);
     frameTimes[currentFrame % NUM_SAMPLES] = _frameTime;
 
-    //current ticks is now previous ticks
+    // Current ticks is now previous ticks
     prevTicks = currentTicks;
 
-    //The number of frames to average
-    int count;
+    // The number of frames to average
+    int cnt;
 
     currentFrame++;
     if (currentFrame < NUM_SAMPLES) {
-        count = currentFrame;
+        cnt = currentFrame;
     } else {
-        count = NUM_SAMPLES;
+        cnt = NUM_SAMPLES;
     }
 
-    //Average all the frame times
+    // Average all the frame times
     float frameTimeAverage = 0;
-    for (int i = 0; i < count; i++) {
+    for (int i = 0; i < cnt; i++) {
         frameTimeAverage += frameTimes[i];
     }
-    frameTimeAverage /= count;
+    frameTimeAverage /= cnt;
 
-    //Calculate FPS
+    // Calculate FPS
     if (frameTimeAverage > 0) {
         _fps = 1000.0f / frameTimeAverage;
     } else {

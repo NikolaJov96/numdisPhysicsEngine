@@ -8,49 +8,50 @@
 namespace ndGE
 {
 
+    /**
+     * Class containing information about the camera
+     * Enabling it to move through space
+     * Returns world to view matrix
+     */
     class Camera
     {
     public:
         Camera();
         ~Camera() = default;
+
         // Get position, view direction and world to view matrix
-        glm::vec3 getPosition() const { return position; }
-        glm::vec3 getViewDirection() const { return viewDirection; }
-        glm::mat4 getWorldToViewMatrix() const
-        {
-            // position + viewDirection = look at point
-            return glm::lookAt(position, position + viewDirection, UP);
-        }
+        glm::vec3 getPosition() const { return _position; }                         //!< Returns camera position
+        glm::vec3 getViewDirection() const { return _viewDirection; }               //!< Returns view direction
+        glm::mat4 getWorldToViewMatrix() const;                                     //!< Returns world to view transformation matrix
 
         // Update position
-        void updatePosition(GLfloat x, GLfloat y, GLfloat z)
-            { updatePosition(glm::vec3(x, y, z)); }
-        void updatePosition(glm::vec3 delta)
-            { position += delta; }
+        void updatePosition(GLfloat x, GLfloat y, GLfloat z);                       //!< Update camera position relative to the current position
+        void updatePosition(glm::vec3 delta);                                       //!< Update camera position relative to the current position
+
+        // Update position relatively
+        void updatePositionRelatively(GLfloat x, GLfloat y, GLfloat z);             //!< Update camera position relative to the current position and view direction
+        void updatePositionRelatively(glm::vec3 delta);                             //!< Update camera position relative to the current position and view direction
+
         // Set position
-        void setPosition(GLfloat x, GLfloat y, GLfloat z)
-            { setPosition(glm::vec3(x, y, z)); }
-        void setPosition(glm::vec3 pos)
-            { position = pos; }
+        void setPosition(GLfloat x, GLfloat y, GLfloat z);                          //!< Set camera position
+        void setPosition(glm::vec3 pos);                                            //!< Set camera position
+
         // Update view direction
-        void updateViewDirection(GLfloat deg, GLfloat x, GLfloat y, GLfloat z)
-            { updateViewDirection(deg, glm::vec3(x, y, z)); }
-        void updateViewDirection(GLfloat deg, glm::vec3 axes)
-            { viewDirection = glm::mat3(glm::rotate(glm::radians(deg), axes)) * viewDirection; }
+        void updateViewDirection(GLfloat deg, GLfloat x, GLfloat y, GLfloat z);     //!< Update camera view direction relative to the current position
+        void updateViewDirection(GLfloat deg, glm::vec3 axes);                      //!< Update camera view direction relative to the current position
+
         // Set view direction
-        void setViewDirection(GLfloat x, GLfloat y, GLfloat z)
-            { setViewDirection(glm::vec3(x, y, z)); }
-        void setViewDirection(glm::vec3 dir)
-            { if (glm::length(dir) != 0) viewDirection = glm::normalize(dir); }
+        void setViewDirection(GLfloat x, GLfloat y, GLfloat z);                     //!< Set camera view direction
+        void setViewDirection(glm::vec3 dir);                                       //!< Set camera view direction
+
         // Set (view direction to) look at point
-        void setLookAt(GLfloat x, GLfloat y, GLfloat z)
-            { setLookAt(glm::vec3(x, y, z)); }
-        void setLookAt(glm::vec3 lookAt)
-            { viewDirection = glm::normalize(lookAt - position); }
+        void setLookAt(GLfloat x, GLfloat y, GLfloat z);                            //!< Set camera look at point
+        void setLookAt(glm::vec3 lookAt);                                           //!< Set camera view direction
+
     private:
-        glm::vec3 position;
-        glm::vec3 viewDirection; // always length 1
-        const glm::vec3 UP;
+        glm::vec3 _position;            //!< Camera position vector
+        glm::vec3 _viewDirection;       //!< Camera view direction (always length 1)
+        const glm::vec3 UP;             //!< Vector pointing up
     };
 
 }

@@ -1,10 +1,8 @@
-#include <iostream>
-
 #include "Object.h"
 
-using namespace ndPE;
+#include <iostream>
 
-Object::Object(GLfloat x, GLfloat y, GLfloat z, GLfloat angle,
+ndPE::Object::Object(GLfloat x, GLfloat y, GLfloat z, GLfloat angle,
                 GLfloat rotx, GLfloat roty, GLfloat rotz, GLfloat scx,
                 GLfloat scy, GLfloat scz, ObjectTypes type):
                 _pos(x, y, z), _angle(angle),
@@ -13,31 +11,5 @@ Object::Object(GLfloat x, GLfloat y, GLfloat z, GLfloat angle,
                 _velocity(0), _type(type)
                 {}
 
-Object::~Object(){};
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+ndPE::Object::~Object(){};
 

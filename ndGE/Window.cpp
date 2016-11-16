@@ -1,127 +1,122 @@
+#include "Window.h"
+
 #include <iostream>
-#include <string>
-#include <vector>
 #include <fstream>
 #include <sstream>
 #include <GL/glew.h>
 #include <glm/glm.hpp>
 
-#include "ndGE.h"
-#include "Window.h"
-#include "ErrorHandler.h"
-
-namespace ndGE
+ndGE::ShapeDescription ndGE::Window::loadShape(const std::string &file)
 {
-    static ShapeDescription loadShape(const std::string &file)
+    std::ifstream inFile(file);
+    if (!inFile.is_open())
     {
-        std::ifstream inFile(file);
-        if (!inFile.is_open())
-        {
-            std::cout <<"Wrong shape file name: " <<file <<std::endl;
-            exit(1);
-        }
-        ShapeDescription ret;
-        inFile >>ret.numVerts >>ret.numInds;
-        ret.numInds *= 3;
-        std::vector <Vertex> verts;
-        for (GLuint i=0; i<ret.numVerts; i++)
-        {
-            GLfloat x, y, z, r, g, b;
-            inFile >>x >>y >>z >>r >>g >>b;
-            verts.push_back(Vertex(glm::vec3(x, y, z), glm::vec3(r, g, b)));
-        }
-        ret.vertices = new Vertex[ret.numVerts];
-        memcpy(ret.vertices, &verts[0], ret.numVerts*sizeof(glm::vec3) * 2);
-        std::vector <GLushort> inds;
-        for (GLuint i=0; i<ret.numInds; i++)
-        {
-            GLushort x;
-            inFile >>x;
-            inds.push_back(x);
-        }
-        ret.indices = new GLushort[ret.numInds];
-        memcpy(ret.indices, &inds[0], ret.numInds * sizeof(GLushort));
-        return ret;
+        std::cout <<"Wrong shape file name: " <<file <<std::endl;
+        exit(1);
     }
+    ShapeDescription ret;
+    inFile >>ret.numVerts >>ret.numInds;            // Read number of verteces and triangles
+    ret.numInds *= 3;
+    ret.vertices = new Vertex[ret.numVerts];        // Initialize the array of verteces
+    for (GLuint i=0; i<ret.numVerts; i++)           // Load array of verteces
+    {
+        GLfloat x, y, z, r, g, b;
+        inFile >>x >>y >>z >>r >>g >>b;
+        ret.vertices[i] = Vertex(glm::vec3(x, y, z), glm::vec3(r, g, b));
+    }
+    ret.indices = new GLushort[ret.numInds];        // Initialize the array of indices
+    for (GLuint i=0; i<ret.numInds; i++)            // Load array of indices
+    {
+        GLushort x;
+        inFile >>x;
+        ret.indices[i] = x;
+    }
+    return ret;
+}
 
-    static bool checkStatus(GLint objectID,
+bool ndGE::Window::checkStatus(GLint objectID,
                  PFNGLGETSHADERIVPROC objectPropertyGetterFunc,
                  PFNGLGETSHADERINFOLOGPROC getInfoLogFunc,
                  GLenum statusType)
+{
+    GLint status;
+    objectPropertyGetterFunc(objectID, statusType, &status);
+    if (status != GL_TRUE)
     {
-        GLint status;
-        objectPropertyGetterFunc(objectID, statusType, &status);
-        if (status != GL_TRUE)
-        {
-            // Get log length
-            GLint infoLogLen;
-            objectPropertyGetterFunc(objectID, GL_INFO_LOG_LENGTH, &infoLogLen);
-            // Get log
-            GLchar *buffer = new GLchar[infoLogLen];
-            GLsizei bufferSize;
-            getInfoLogFunc(objectID, infoLogLen, &bufferSize, buffer);
-            std::cout <<buffer <<std::endl;
-            delete [] buffer;
-            return false;
-        }
-        return true;
+        // Get log length
+        GLint infoLogLen;
+        objectPropertyGetterFunc(objectID, GL_INFO_LOG_LENGTH, &infoLogLen);
+        // Get log
+        GLchar *buffer = new GLchar[infoLogLen];
+        GLsizei bufferSize;
+        getInfoLogFunc(objectID, infoLogLen, &bufferSize, buffer);
+        std::cout <<buffer <<std::endl;
+        delete [] buffer;
+        return false;
     }
+    return true;
+}
 
-    static GLuint installShaders()
-    {
-        //Load vertex shader file
-        std::stringstream shaderFileBuffer;
-        std::ifstream shaderFile("Shaders/vertexShader.vert");
-        shaderFileBuffer <<shaderFile.rdbuf();
-        std::string vertexShaderCode = shaderFileBuffer.str();
-        shaderFile.close();
+GLuint ndGE::Window::installShaders()
+{
+    //Load vertex shader file
+    std::stringstream shaderFileBuffer;
+    std::ifstream shaderFile("Shaders/vertexShader.vert");
+    shaderFileBuffer <<shaderFile.rdbuf();
+    std::string vertexShaderCode = shaderFileBuffer.str();
+    shaderFile.close();
 
-        // Load fragment  shader file
-        shaderFileBuffer.str(std::string());
-        shaderFile.open("Shaders/fragmentShader.frag");
-        shaderFileBuffer <<shaderFile.rdbuf();
-        std::string fragmentShaderCode = shaderFileBuffer.str();
-        shaderFile.close();
+    // Load fragment  shader file
+    shaderFileBuffer.str(std::string());
+    shaderFile.open("Shaders/fragmentShader.frag");
+    shaderFileBuffer <<shaderFile.rdbuf();
+    std::string fragmentShaderCode = shaderFileBuffer.str();
+    shaderFile.close();
 
-        // Create shader programs
-        GLuint vertexShaderID = glCreateShader(GL_VERTEX_SHADER);
-        GLuint fragmentShaderID = glCreateShader(GL_FRAGMENT_SHADER);
+    // Create shader programs
+    GLuint vertexShaderID = glCreateShader(GL_VERTEX_SHADER);
+    GLuint fragmentShaderID = glCreateShader(GL_FRAGMENT_SHADER);
 
-        // Load shader programs with loaded code
-        const GLchar *adapter[1] = {vertexShaderCode.c_str()};
-        glShaderSource(vertexShaderID, 1, adapter, 0);
-        adapter[0] = fragmentShaderCode.c_str();
-        glShaderSource(fragmentShaderID, 1, adapter, 0);
+    // Load shader programs with loaded code
+    const GLchar *adapter[1] = {vertexShaderCode.c_str()};
+    glShaderSource(vertexShaderID, 1, adapter, 0);
+    adapter[0] = fragmentShaderCode.c_str();
+    glShaderSource(fragmentShaderID, 1, adapter, 0);
 
-        // Compile shader programs
-        glCompileShader(vertexShaderID);
-        glCompileShader(fragmentShaderID);
+    // Compile shader programs
+    glCompileShader(vertexShaderID);
+    glCompileShader(fragmentShaderID);
 
-        // Check for errors in vertex shader program compilation
-        if (!checkStatus(vertexShaderID, glGetShaderiv, glGetShaderInfoLog, GL_COMPILE_STATUS)) exit(1);
+    // Check for errors in vertex shader program compilation
+    if (!checkStatus(vertexShaderID, glGetShaderiv, glGetShaderInfoLog, GL_COMPILE_STATUS)) exit(1);
 
-        // Check for errors in fragment shader program compilation
-        if (!checkStatus(fragmentShaderID, glGetShaderiv, glGetShaderInfoLog, GL_COMPILE_STATUS)) exit(1);
+    // Check for errors in fragment shader program compilation
+    if (!checkStatus(fragmentShaderID, glGetShaderiv, glGetShaderInfoLog, GL_COMPILE_STATUS)) exit(1);
 
-        // Link shader program
-        GLuint programID = glCreateProgram();
-        glAttachShader(programID, vertexShaderID);
-        glAttachShader(programID, fragmentShaderID);
-        glLinkProgram(programID);
+    // Create shader program and attach vertex and fragment shader
+    GLuint programID = glCreateProgram();
+    glAttachShader(programID, vertexShaderID);
+    glAttachShader(programID, fragmentShaderID);
 
-        // Check for errors in shader program linking
-        if (!checkStatus(programID, glGetProgramiv, glGetProgramInfoLog, GL_LINK_STATUS)) exit(1);
+    // Set attribute locations (could be set in shader itself, but only in version above 3.0)
+    glBindAttribLocation(programID, 0, "position");
+    glBindAttribLocation(programID, 1, "vertexColor");
+    glBindAttribLocation(programID, 2, "fullTransformMatrix");
 
-        // Delete shader programs
-        glDeleteShader(vertexShaderID);
-        glDeleteShader(fragmentShaderID);
+    // Link shader program
+    glLinkProgram(programID);
 
-        // Select program to use
-        glUseProgram(programID);
+    // Check for errors in shader program linking
+    if (!checkStatus(programID, glGetProgramiv, glGetProgramInfoLog, GL_LINK_STATUS)) exit(1);
 
-        return programID;
-    }
+    // Delete shader programs
+    glDeleteShader(vertexShaderID);
+    glDeleteShader(fragmentShaderID);
 
+    // Select program to use
+    glUseProgram(programID);
+
+    return programID;
 }
 
 ndGE::Window::Window(const std::string &windowName, int width, int height) :
@@ -147,7 +142,7 @@ ndGE::Window::Window(const std::string &windowName, int width, int height) :
     glEnable(GL_DEPTH_TEST);                                                // Enable depth test
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);                      // (needed only for textures)
 
-    _programID = installShaders();                                              // Load, compile and link shaders and return program ID
+    _programID = installShaders();                                          // Load, compile and link shaders and return program ID
 };
 
 ndGE::Window::~Window(){};
@@ -161,10 +156,14 @@ void ndGE::Window::addShape(const std::string filePath)
     Shape *shape = new Shape();
     shape->desc = new ShapeDescription(loadShape(filePath));
 
+    // Setup Vertex array
+    glGenVertexArrays(1, &shape->vertexArrayBufferID);
+    glBindVertexArray(shape->vertexArrayBufferID);
+
     // Create, bind and allocate vertex buffer
     glGenBuffers(1, &shape->vertexBufferID);
     glBindBuffer(GL_ARRAY_BUFFER, shape->vertexBufferID);
-    glBufferData(GL_ARRAY_BUFFER, shape->desc->vertexBufferSize(), shape->desc->vertices, GL_DYNAMIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, shape->desc->vertexBufferSize(), shape->desc->vertices, GL_STATIC_DRAW);
 
     // Describe data inside vertex buffer
     glEnableVertexAttribArray(0); // position
@@ -175,17 +174,17 @@ void ndGE::Window::addShape(const std::string filePath)
     // Create, bind and load index buffer
     glGenBuffers(1, &shape->indexBufferID);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, shape->indexBufferID);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, shape->desc->indexBufferSize(), shape->desc->indices, GL_DYNAMIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, shape->desc->indexBufferSize(), shape->desc->indices, GL_STATIC_DRAW);
 
-    // Init buffer for transformation matrix
+    // Create, bind and initialize empty buffer for transformation matrix
     glGenBuffers(1, &shape->transformationMatrixBufferID);
     glBindBuffer(GL_ARRAY_BUFFER, shape->transformationMatrixBufferID);
-    // Create empty buffer
     glBufferData(GL_ARRAY_BUFFER, sizeof(glm::mat4), 0, GL_DYNAMIC_DRAW);
 
+    // Describe  data inside transformation matrix buffer
     for (int i=0; i<4; i++)
     {
-        glVertexAttribPointer(2 + i, 4, GL_FLOAT, GL_FALSE, sizeof(glm::mat4), (void*)(sizeof(GLfloat) * i * 4));
+        glVertexAttribPointer(2 + i, 4, GL_FLOAT, GL_FALSE, sizeof(glm::vec4), (void*)(sizeof(GLfloat) * i * 4));
         glEnableVertexAttribArray(i + 2);
         glVertexAttribDivisor(i + 2, 1);
     }
@@ -203,27 +202,15 @@ void ndGE::Window::drawFrame()
 
     for (unsigned i=0; i<_shapes.size(); i++)
     {
-        glBindBuffer(GL_ARRAY_BUFFER, _shapes[i]->vertexBufferID);
-        glBufferData(GL_ARRAY_BUFFER, _shapes[i]->desc->vertexBufferSize(), _shapes[i]->desc->vertices, GL_DYNAMIC_DRAW);
-        glEnableVertexAttribArray(0); // position
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6*sizeof(GLfloat), 0);
-        glEnableVertexAttribArray(1); // color (set it using shader)
-        glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6*sizeof(GLfloat), (char*)(sizeof(GLfloat) * 3));
-
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _shapes[i]->indexBufferID);
-        glBufferData(GL_ELEMENT_ARRAY_BUFFER, _shapes[i]->desc->indexBufferSize(), _shapes[i]->desc->indices, GL_DYNAMIC_DRAW);
-
-        glBindBuffer(GL_ARRAY_BUFFER, _shapes[i]->transformationMatrixBufferID);
-        // Create empty buffer
-
-        for (int i=0; i<4; i++)
+        // Bind array buffer for the specific shape
+        glBindVertexArray(_shapes[i]->vertexArrayBufferID);
+        for (int i=0; i<4; i++)  // This should NOT be needed
         {
-            glVertexAttribPointer(2 + i, 4, GL_FLOAT, GL_FALSE, sizeof(glm::mat4), (void*)(sizeof(GLfloat) * i * 4));
-            glEnableVertexAttribArray(i + 2);
+            glVertexAttribPointer(2 + i, 4, GL_FLOAT, GL_FALSE, sizeof(glm::vec4), (void*)(sizeof(GLfloat) * i * 4));
             glVertexAttribDivisor(i + 2, 1);
         }
-        glBufferData(GL_ARRAY_BUFFER, sizeof(glm::mat4), &_fullTransforms[i][0], GL_DYNAMIC_DRAW);
-
+        // Update matrices for all objects with the same shape and draw them
+        glBufferData(GL_ARRAY_BUFFER, sizeof(glm::mat4) * _fullTransforms[i].size(), &_fullTransforms[i][0], GL_DYNAMIC_DRAW);
         glDrawElementsInstanced(GL_TRIANGLES, _shapes[i]->desc->numInds, GL_UNSIGNED_SHORT, 0, _fullTransforms[i].size());
     }
 
@@ -239,6 +226,10 @@ void ndGE::Window::resetTransformMaritces()
 
 void ndGE::Window::addTransformMatrix(int objType, GLfloat *data)
 {
+    // scale, rotate and translate object
+    // present world as seen form the camera
+    // project world to 2D plane to draw
+    // to achieve this multiply corresponding matrices in reverse order
     _fullTransforms[objType].push_back(
         _projectionMatrix * _camera.getWorldToViewMatrix() *
         glm::translate(glm::vec3(data[0], data[1], data[2])) *

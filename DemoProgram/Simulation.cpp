@@ -1,16 +1,12 @@
+#include "Simulation.h"
+
 #include <iostream>
-#include <vector>
 #include <SDL2/SDL.h>
 #include <GL/glew.h>
 
-#include "Simulation.h"
-
-#include "../ndGE/ndGE.h"
-#include "../ndGE/ErrorHandler.h"
+#include "../ndPE/Object.h"
 #include "../ndGE/Timing.h"
 
-#include "../ndPE/Object.h"
-#include "../ndPE/World.h"
 
 ndPE::Object *cubeObj, *ballObj;
 
@@ -46,10 +42,9 @@ void Simulation::loop()
     while (_runState == simState::RUN)
     {
         fpsLimiter.begin();                     // Indicate beginning of the iteration to the fpsLimiter
-        processInput();                         // Update input manager
+        getInput();                             // Update input manager
         // manually update the world
-        cubeObj->setAngle(((int)cubeObj->getAngle() + 1) % 360);
-        ballObj->setAngle(((int)ballObj->getAngle() + 1) % 360);
+        manualUpdate();
         // world auto update (without collision resolving)
         // get collisions
         // manual collision resolving
@@ -61,10 +56,10 @@ void Simulation::loop()
     }
 }
 
-void Simulation::processInput()
+void Simulation::getInput()
 {
-    // Update input manager
     SDL_Event event;
+    int xPos, yPos;
     while (SDL_PollEvent(&event))
     {
         switch (event.type)
@@ -72,21 +67,35 @@ void Simulation::processInput()
         case SDL_QUIT:
             _runState = simState::STOP;
             break;
+        case SDL_KEYDOWN:
+            _input.pressKey(event.key.keysym.sym);
+            break;
         case SDL_KEYUP:
-            switch(event.key.keysym.sym)
-            {
-                case SDLK_w: _window->_camera.updatePosition(0, 0, -1); break;
-                case SDLK_s: _window->_camera.updatePosition(0, 0, 1); break;
-                case SDLK_a: _window->_camera.updatePosition(-1, 0, 0); break;
-                case SDLK_d: _window->_camera.updatePosition(1, 0, 0); break;
-                case SDLK_r: _window->_camera.updatePosition(0, 1, 0); break;
-                case SDLK_f: _window->_camera.updatePosition(0, -1, 0); break;
-                case SDLK_q: _window->_camera.updateViewDirection(10, 0, 1, 0); break;
-                case SDLK_e: _window->_camera.updateViewDirection(-10, 0, 1, 0); break;
-            }
+            _input.releaseKey(event.key.keysym.sym);
             break;
         }
     }
+    SDL_GetMouseState(&xPos, &yPos);
+    _input.setMouseCoords(xPos, yPos);
+}
+
+void Simulation::manualUpdate()
+{
+    // Translate camera
+    if (_input.isKeyDown(SDLK_w)) _window->_camera.updatePositionRelatively(0, 0, CAMERA_TRANSLATION_SPEED);
+    if (_input.isKeyDown(SDLK_s)) _window->_camera.updatePositionRelatively(0, 0, -CAMERA_TRANSLATION_SPEED);
+    if (_input.isKeyDown(SDLK_a)) _window->_camera.updatePositionRelatively(-CAMERA_TRANSLATION_SPEED, 0, 0);
+    if (_input.isKeyDown(SDLK_d)) _window->_camera.updatePositionRelatively(CAMERA_TRANSLATION_SPEED, 0, 0);
+    if (_input.isKeyDown(SDLK_r)) _window->_camera.updatePositionRelatively(0, CAMERA_TRANSLATION_SPEED, 0);
+    if (_input.isKeyDown(SDLK_f)) _window->_camera.updatePositionRelatively(0, -CAMERA_TRANSLATION_SPEED, 0);
+    // Rotate camera
+    if (_input.isKeyDown(SDLK_j)) _window->_camera.updateViewDirection(CAMERA_ROTATION_SPEED, 0, 1, 0);
+    if (_input.isKeyDown(SDLK_l)) _window->_camera.updateViewDirection(-CAMERA_ROTATION_SPEED, 0, 1, 0);
+    if (_input.isKeyDown(SDLK_i)) _window->_camera.updateViewDirection(CAMERA_ROTATION_SPEED, 1, 0, 0);
+    if (_input.isKeyDown(SDLK_k)) _window->_camera.updateViewDirection(-CAMERA_ROTATION_SPEED, 1, 0, 0);
+    // Other updates
+    cubeObj->setAngle(((int)cubeObj->getAngle() + 3) % 360);
+    ballObj->setAngle(((int)ballObj->getAngle() + 3) % 360);
 }
 
 void Simulation::drawFrame()

@@ -204,14 +204,19 @@ void ndGE::Window::drawFrame()
     {
         // Bind array buffer for the specific shape
         glBindVertexArray(_shapes[i]->vertexArrayBufferID);
-        for (int i=0; i<4; i++)  // This should NOT be needed
+
+        for (int j=0; j<4; j++)  // This should NOT be needed
         {
-            glVertexAttribPointer(2 + i, 4, GL_FLOAT, GL_FALSE, sizeof(glm::vec4), (void*)(sizeof(GLfloat) * i * 4));
-            glVertexAttribDivisor(i + 2, 1);
+            glVertexAttribPointer(2 + j, 4, GL_FLOAT, GL_FALSE, sizeof(glm::vec4), (void*)(sizeof(GLfloat) * j * 4));
+            glVertexAttribDivisor(j + 2, 1);
         }
         // Update matrices for all objects with the same shape and draw them
-        glBufferData(GL_ARRAY_BUFFER, sizeof(glm::mat4) * _fullTransforms[i].size(), &_fullTransforms[i][0], GL_DYNAMIC_DRAW);
-        glDrawElementsInstanced(GL_TRIANGLES, _shapes[i]->desc->numInds, GL_UNSIGNED_SHORT, 0, _fullTransforms[i].size());
+        // glDrawElementsInstanced is not supported by openGL 3.0, so it is not used
+        for (unsigned j=0; j<_fullTransforms[i].size(); j++)
+        {
+            glBufferData(GL_ARRAY_BUFFER, sizeof(glm::mat4), &_fullTransforms[i][j], GL_DYNAMIC_DRAW);
+            glDrawElements(GL_TRIANGLES, _shapes[i]->desc->numInds, GL_UNSIGNED_SHORT, 0);
+        }
     }
 
     // Swap our buffer and draw everything to the screen
@@ -220,8 +225,8 @@ void ndGE::Window::drawFrame()
 
 void ndGE::Window::resetTransformMaritces()
 {
-    for (unsigned i=0; i<_fullTransforms.size(); i++)
-        _fullTransforms[i].clear();
+    // Delete transformation matrices for each shape
+    for (auto &it : _fullTransforms) it.clear();
 }
 
 void ndGE::Window::addTransformMatrix(int objType, GLfloat *data)
@@ -230,9 +235,8 @@ void ndGE::Window::addTransformMatrix(int objType, GLfloat *data)
     // present world as seen form the camera
     // project world to 2D plane to draw
     // to achieve this multiply corresponding matrices in reverse order
-    _fullTransforms[objType].push_back(
-        _projectionMatrix * _camera.getWorldToViewMatrix() *
-        glm::translate(glm::vec3(data[0], data[1], data[2])) *
-        glm::rotate(glm::radians(data[3]), glm::vec3(data[4], data[5], data[6])) *
-        glm::scale(glm::vec3(data[7], data[8], data[9])));
+    _fullTransforms[objType].push_back(_projectionMatrix * _camera.getWorldToViewMatrix() *
+                                       glm::translate(glm::vec3(data[0], data[1], data[2])) *
+                                       glm::rotate(glm::radians(data[3]), glm::vec3(data[4], data[5], data[6])) *
+                                       glm::scale(glm::vec3(data[7], data[8], data[9])));
 }

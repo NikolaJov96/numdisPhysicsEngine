@@ -2,7 +2,7 @@
 
 #include <SDL2/SDL.h>
 
-ndGE::FpsLimiter::FpsLimiter(float maxFPS) : _maxFPS(maxFPS) {}
+ndGE::FpsLimiter::FpsLimiter(float maxFPS) : _maxFPS(maxFPS), _frameTime(0) {}
 
 void ndGE::FpsLimiter::setMaxFPS(float maxFPS) {
     _maxFPS = maxFPS;               // Update desired FPS value

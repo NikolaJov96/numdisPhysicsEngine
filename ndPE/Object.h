@@ -16,7 +16,7 @@ namespace ndPE {
     public:
         Object(GLfloat x, GLfloat y, GLfloat z, GLfloat angle,
                 GLfloat rotx, GLfloat roty, GLfloat rotz, GLfloat scx,
-                GLfloat scy, GLfloat scz, ObjectTypes);
+                GLfloat scy, GLfloat scz, float mass, ObjectTypes);
         ~Object();
         /**
          * Returns pointer to the _x, which can be used to access
@@ -44,7 +44,8 @@ namespace ndPE {
         glm::vec3 _rotVec;      //!< Rotation axis vector
         glm::vec3 _scaleVec;    //!< scale x, y, z
         glm::vec3 _velDir;      //!< Velicity rotation vector
-        GLfloat _velocity;      //!< Velocity
+        float _velocity;        //!< Velocity
+        float _mass;            //!< Object mass in kg-s
         ObjectTypes _type;      //!< Object type
     };
 

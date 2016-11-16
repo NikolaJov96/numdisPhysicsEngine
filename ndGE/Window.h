@@ -33,10 +33,10 @@ namespace ndGE {
                          GLenum statusType);                    //!< Checks fr shader compilation and linking errors
         GLuint installShaders();                                //!< Install shader programs
 
-        int _width;                         //!< Screen width
-        int _height;                        //!< Screen height
-        SDL_Window *_window;                //!< SDL window object
-        GLuint _programID;                  //!< glsl shader program
+        int _width;             //!< Screen width
+        int _height;            //!< Screen height
+        SDL_Window *_window;    //!< SDL window object
+        GLuint _programID;      //!< glsl shader program
 
         /**
          * Structure that is used to encapsulate shape "appearance"
@@ -50,8 +50,8 @@ namespace ndGE {
             GLuint vertexArrayBufferID;             //!< OpenGL vertex array buffer id
             GLuint transformationMatrixBufferID;    //!< OpenGL buffer id for transformation matrix
         };
+        std::vector<std::vector<glm::mat4>> _fullTransforms;    //!< Vector of transform matrix vectors
         std::vector <Shape*> _shapes;                           //!< Vector of shape definitions
-        std::vector<std::vector <glm::mat4>> _fullTransforms;   //!< Vector of transform matrix vectors
         glm::mat4 _projectionMatrix;                            //!< Matrix used to project world to drawing coordinates
     };
 

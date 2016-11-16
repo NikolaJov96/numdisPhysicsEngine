@@ -32,26 +32,33 @@ void Simulation::initSystems()
     _window->addShape("res/cube.shp");
     _window->addShape("res/ball.shp");
 
-    cubeObj = _world.makeObject(2.0f, 0.0f, -4.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.5f, 0.5f, ndPE::ObjectTypes::CUBE);
-    ballObj = _world.makeObject(-2.0f, 0.0f, -4.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, ndPE::ObjectTypes::BALL);
+    // Should really load object descriptions form file
+    _world.makeObject(0.0f, -0.2f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 10.0f, 0.1f, 10.0f, 1.0f, ndPE::ObjectTypes::CUBE);
+    ballObj = _world.makeObject(0.0f, 1.0f, -6.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, ndPE::ObjectTypes::BALL);
+    cubeObj = _world.makeObject(2.0f, 1.0f, -4.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.5f, 0.5f, 1.0f, ndPE::ObjectTypes::CUBE);
+    ballObj = _world.makeObject(-2.0f, 1.0f, -4.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, ndPE::ObjectTypes::BALL);
+
+    _window->_camera.setPosition(0.0f, 1.0f, 0.0f);
 }
 
 void Simulation::loop()
 {
-    ndGE::FpsLimiter fpsLimiter;                // Create FPS limiter object (with 60 FPS desired FPS value)
+
+    ndGE::FpsLimiter fpsLimiter;                        // Create FPS limiter object (with 60 FPS desired FPS value)
     while (_runState == simState::RUN)
     {
-        fpsLimiter.begin();                     // Indicate beginning of the iteration to the fpsLimiter
-        getInput();                             // Update input manager
+        fpsLimiter.begin();                             // Indicate beginning of the iteration to the fpsLimiter
+        getInput();                                     // Update input manager
         // manually update the world
         manualUpdate();
         // world auto update (without collision resolving)
+        _world.makeAStep(fpsLimiter.getDelatTime());    // automatic collision resolving
         // get collisions
         // manual collision resolving
-        // automatic collision resolving
-        drawFrame();                            // Draw next frame
+        // another collision detection and resolving
+        drawFrame();                                    // Draw next frame
 
-        _fps = fpsLimiter.end();                // Indicate the end of the iteration to the fpsLimiter
+        _fps = fpsLimiter.end();                        // Indicate the end of the iteration to the fpsLimiter
         if ((int)cubeObj->getAngle() % 45 == 0) std::cout <<_fps <<std::endl;
     }
 }
@@ -100,7 +107,8 @@ void Simulation::manualUpdate()
 
 void Simulation::drawFrame()
 {
-    _window->resetTransformMaritces();
+    //int arr[] = {1, 2};
+    _window->resetTransformMaritces(); //(arr);
     for (int i=0; i<_world.getObjectsNum(); i++)
     {
         ndPE::Object *obj = _world.getObject(i);

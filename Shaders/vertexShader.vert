@@ -1,4 +1,4 @@
-#version 430
+#version 130
 
 in vec3 position;               //layout(location=0)
 in vec3 vertexColor;            //layout(location=1)

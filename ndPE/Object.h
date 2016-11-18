@@ -24,7 +24,7 @@ namespace ndPE {
          */
         GLfloat *getParams() { return &_pos.x; }
         glm::vec3 getPosition() const { return _pos; }              //!< Returns glm::vec3 vector of object position
-        GLfloat getAngle() const { return _angle; }                 //!< Returns angel of the object
+        GLfloat getAngle() const { return _angle; }                 //!< Returns angel of the object in degrees
         glm::vec3 getRotationAxisVector() const { return _rotVec; } //!< Returns glm::vec3 axis vector for object rotation
         glm::vec3 getScaleVector() const { return _scaleVec; }      //!< Returns glm::vec3 vector of object scale
         glm::vec3 getVelocityDirection() const { return _velDir; }  //!< Returns glm::vec3 vector of object velocity direction

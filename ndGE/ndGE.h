@@ -11,6 +11,17 @@ namespace ndGE {
     extern void fatalError(const std::string &message);     //!< Prints error message, quits SDL and program
 
     /**
+     * Function that converts angle in degrees into angle in
+     * radians, only if define CONVERT_TO_RADIANS exists.
+     * Different variant i needed for different openGL versions
+     */
+    #ifdef CONVERT_TO_RADIANS
+    inline GLfloat CONV_ANGLE(GLfloat i) { return glm::radians(i); }
+    #else
+    inline GLfloat CONV_ANGLE(GLfloat i) { return i; }
+    #endif // CONVERT_TO_RADIANS
+
+    /**
      * Structure containing information about single vertex
      */
     struct Vertex

@@ -123,7 +123,7 @@ GLuint ndGE::Window::installShaders()
 
 ndGE::Window::Window(const std::string &windowName, int width, int height) :
     _width(width), _height(height),
-    _projectionMatrix(glm::perspective(glm::radians(60.0f), ((float)width) / height, 0.1f, 30.0f))
+    _projectionMatrix(glm::perspective(CONV_ANGLE(60.0f), ((float)width) / height, 0.1f, 30.0f))
 {
     _width = width;
     _height = height;
@@ -221,6 +221,6 @@ void ndGE::Window::addTransformMatrix(int objType, GLfloat *data)
     // to achieve this multiply corresponding matrices in reverse order
     _fullTransforms[objType].push_back(_projectionMatrix * _camera.getWorldToViewMatrix() *
                                        glm::translate(glm::vec3(data[0], data[1], data[2])) *
-                                       glm::rotate(glm::radians(data[3]), glm::vec3(data[4], data[5], data[6])) *
+                                       glm::rotate(CONV_ANGLE(data[3]), glm::vec3(data[4], data[5], data[6])) *
                                        glm::scale(glm::vec3(data[7], data[8], data[9])));
 }

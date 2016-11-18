@@ -2,6 +2,8 @@
 
 #include <iostream>
 
+#include "ndGE.h"
+
  ndGE::Camera::Camera() :
      _position(0.0f, 0.0f, 0.0f),
      _viewDirection(0.0f, 0.0f, -1.0f),
@@ -50,7 +52,7 @@ void ndGE::Camera::updateViewDirection(GLfloat deg, GLfloat x, GLfloat y, GLfloa
 }
 void ndGE::Camera::updateViewDirection(GLfloat deg, glm::vec3 axes)
 {
-    _viewDirection = glm::normalize(glm::mat3(glm::rotate(glm::radians(deg), axes)) * _viewDirection);
+    _viewDirection = glm::normalize(glm::mat3(glm::rotate(CONV_ANGLE(deg), axes)) * _viewDirection);
 }
 
 void ndGE::Camera::setViewDirection(GLfloat x, GLfloat y, GLfloat z)

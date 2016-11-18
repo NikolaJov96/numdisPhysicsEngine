@@ -18,7 +18,7 @@
 	"../ndPE/Object.h"
 	"../ndGE/Timing.h"
 
-1479253304 c:\users\nikola\documents\git\numdisphysicsengine\ndge\ndge.h
+1479495591 c:\users\nikola\documents\git\numdisphysicsengine\ndge\ndge.h
 	<string>
 	<GL/glew.h>
 	<glm/glm.hpp>
@@ -34,7 +34,7 @@
 	<vector>
 	"Object.h"
 
-1479308013 c:\users\nikola\documents\git\numdisphysicsengine\ndpe\object.h
+1479482554 c:\users\nikola\documents\git\numdisphysicsengine\ndpe\object.h
 	<GL/glew.h>
 	<glm/glm.hpp>
 

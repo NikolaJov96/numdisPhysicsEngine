@@ -101,10 +101,12 @@ GLuint ndGE::Window::installShaders()
     // Set attribute locations (could be set in shader itself, but only in version above 3.0)
     glBindAttribLocation(programID, 0, "position");
     glBindAttribLocation(programID, 1, "vertexColor");
-    glBindAttribLocation(programID, 2, "fullTransformMatrix");
 
     // Link shader program
     glLinkProgram(programID);
+
+    // Get location of uniform shader attribute - transformation matrix
+    _uniformMatrixLoc = glGetUniformLocation(programID, "fullTransformMatrix");
 
     // Check for errors in shader program linking
     if (!checkStatus(programID, glGetProgramiv, glGetProgramInfoLog, GL_LINK_STATUS)) exit(1);
@@ -176,19 +178,6 @@ void ndGE::Window::addShape(const std::string filePath)
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, shape->indexBufferID);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, shape->desc->indexBufferSize(), shape->desc->indices, GL_STATIC_DRAW);
 
-    // Create, bind and initialize empty buffer for transformation matrix
-    glGenBuffers(1, &shape->transformationMatrixBufferID);
-    glBindBuffer(GL_ARRAY_BUFFER, shape->transformationMatrixBufferID);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(glm::mat4), 0, GL_DYNAMIC_DRAW);
-
-    // Describe  data inside transformation matrix buffer
-    for (int i=0; i<4; i++)
-    {
-        glVertexAttribPointer(2 + i, 4, GL_FLOAT, GL_FALSE, sizeof(glm::vec4), (void*)(sizeof(GLfloat) * i * 4));
-        glEnableVertexAttribArray(i + 2);
-        glVertexAttribDivisor(i + 2, 1);
-    }
-
     _shapes.push_back(shape);
     _fullTransforms.push_back(std::vector<glm::mat4>());
 }
@@ -205,16 +194,11 @@ void ndGE::Window::drawFrame()
         // Bind array buffer for the specific shape
         glBindVertexArray(_shapes[i]->vertexArrayBufferID);
 
-        for (int j=0; j<4; j++)  // This should NOT be needed
-        {
-            glVertexAttribPointer(2 + j, 4, GL_FLOAT, GL_FALSE, sizeof(glm::vec4), (void*)(sizeof(GLfloat) * j * 4));
-            glVertexAttribDivisor(j + 2, 1);
-        }
         // Update matrices for all objects with the same shape and draw them
         // glDrawElementsInstanced is not supported by openGL 3.0, so it is not used
         for (unsigned j=0; j<_fullTransforms[i].size(); j++)
         {
-            glBufferData(GL_ARRAY_BUFFER, sizeof(glm::mat4), &_fullTransforms[i][j], GL_DYNAMIC_DRAW);
+            glUniformMatrix4fv(_uniformMatrixLoc, 1, GL_FALSE, &_fullTransforms[i][j][0][0]);
             glDrawElements(GL_TRIANGLES, _shapes[i]->desc->numInds, GL_UNSIGNED_SHORT, 0);
         }
     }

@@ -34,7 +34,7 @@ void Simulation::initSystems()
 
     // Should really load object descriptions form file
     _world.makeObject(0.0f, -0.2f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 10.0f, 0.1f, 10.0f, 1.0f, ndPE::ObjectTypes::CUBE);
-    ballObj = _world.makeObject(0.0f, 1.0f, -6.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, ndPE::ObjectTypes::BALL);
+    _world.makeObject(0.0f, 1.0f, -6.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, ndPE::ObjectTypes::BALL);
     cubeObj = _world.makeObject(2.0f, 1.0f, -4.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.5f, 0.5f, 1.0f, ndPE::ObjectTypes::CUBE);
     ballObj = _world.makeObject(-2.0f, 1.0f, -4.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, ndPE::ObjectTypes::BALL);
 

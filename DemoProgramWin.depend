@@ -10,7 +10,7 @@
 1478048240 c:\users\nikola\documents\git\numdisphysicsengine\ndpe\ndpe.h
 	<list>
 
-1479475973 source:c:\users\nikola\documents\git\numdisphysicsengine\demoprogram\simulation.cpp
+1479525546 source:c:\users\nikola\documents\git\numdisphysicsengine\demoprogram\simulation.cpp
 	"Simulation.h"
 	<iostream>
 	<SDL2/SDL.h>
@@ -30,11 +30,11 @@
 	"../ndGE/Camera.h"
 	"../ndGE/InputManager.h"
 
-1479308085 c:\users\nikola\documents\git\numdisphysicsengine\ndpe\world.h
+1479524411 c:\users\nikola\documents\git\numdisphysicsengine\ndpe\world.h
 	<vector>
 	"Object.h"
 
-1479482554 c:\users\nikola\documents\git\numdisphysicsengine\ndpe\object.h
+1479517001 c:\users\nikola\documents\git\numdisphysicsengine\ndpe\object.h
 	<GL/glew.h>
 	<glm/glm.hpp>
 

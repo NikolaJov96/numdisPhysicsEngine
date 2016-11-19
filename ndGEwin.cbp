@@ -48,8 +48,6 @@
 		</Build>
 		<Unit filename="ndGE/Camera.cpp" />
 		<Unit filename="ndGE/Camera.h" />
-		<Unit filename="ndGE/Collisions.cpp" />
-		<Unit filename="ndGE/Collisions.h" />
 		<Unit filename="ndGE/InputManager.cpp" />
 		<Unit filename="ndGE/InputManager.h" />
 		<Unit filename="ndGE/Timing.cpp" />

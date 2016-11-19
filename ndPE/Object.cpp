@@ -8,6 +8,7 @@ ndPE::Object::Object(GLfloat x, GLfloat y, GLfloat z, GLfloat angle,
                 _pos(x, y, z), _angle(angle),
                 _rotVec(rotx, roty, rotz),
                 _scaleVec(scx, scy, scz),
+                _velDir(0, -1, 0),
                 _velocity(0), _mass(mass), _type(type)
                 {}
 

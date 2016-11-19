@@ -11,7 +11,7 @@
 ndPE::Object *cubeObj, *ballObj, *myBall;
 
 Simulation::Simulation() :
-    _scrWidth(800),
+    _scrWidth(1000),
     _scrHeight(600),
     _fps(0),
     _runState(simState::RUN)
@@ -32,21 +32,25 @@ void Simulation::initSystems()
     _window->addShape("res/cube.shp");
     _window->addShape("res/ball.shp");
 
+    _world.setGravity(9.81);
+
     // Should really load object descriptions form file
-    _world.makeObject(0.0f, -0.2f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 10.0f, 0.1f, 10.0f, -1.0f, ndPE::ObjectTypes::CUBE);
-    myBall = _world.makeObject(0.0f, 1.0f, -6.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, +1.0f, ndPE::ObjectTypes::BALL);
-    cubeObj = _world.makeObject(2.0f, 1.0f, -4.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.5f, 0.5f, -1.0f, ndPE::ObjectTypes::CUBE);
-    ballObj = _world.makeObject(-2.0f, 1.0f, -4.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, -1.0f, ndPE::ObjectTypes::BALL);
+    _world.makeObject(0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 10.0f, 0.1f, 10.0f, -1.0f, ndPE::ObjectTypes::CUBE);
+    myBall = _world.makeObject(0.0f, 2.0f, -6.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, ndPE::ObjectTypes::BALL);
+    cubeObj = _world.makeObject(2.0f, 2.0f, -4.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.5f, 0.5f, -1.0f, ndPE::ObjectTypes::CUBE);
+    ballObj = _world.makeObject(-2.0f, 2.0f, -4.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, ndPE::ObjectTypes::BALL);
 
-    myBall->setVelocity(glm::vec3(0.0025f, 0.01f, 0));
+    myBall->setVelocity(glm::vec3(2.0f, 15.0f, 0.0f));
+    ballObj->setVelocity(glm::vec3(0.0f, 0.0001f, 0.0f)); // Why is dis needed?
 
-    _window->_camera.setPosition(0.0f, 1.0f, 20.0f);
+    _window->_camera.setPosition(0.0f, 5.0f, 10.0f);
 }
 
 void Simulation::loop()
 {
 
     ndGE::FpsLimiter fpsLimiter;                        // Create FPS limiter object (with 60 FPS desired FPS value)
+    drawFrame();
     while (_runState == simState::RUN)
     {
         fpsLimiter.begin();                             // Indicate beginning of the iteration to the fpsLimiter
@@ -54,10 +58,12 @@ void Simulation::loop()
         // manually update the world
         manualUpdate();
         // world auto update (without collision resolving)
-        _world.makeAStep(fpsLimiter.getDelatTime());    // automatic collision resolving
+        float frameTime = fpsLimiter.getDelatTime() / 1000;
+        _world.makeAStep(frameTime);                    // automatic collision resolving
         // get collisions
         // manual collision resolving
         // another collision detection and resolving
+        _world.resolveState();
         drawFrame();                                    // Draw next frame
 
         _fps = fpsLimiter.end();                        // Indicate the end of the iteration to the fpsLimiter

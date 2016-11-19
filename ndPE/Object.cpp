@@ -13,3 +13,7 @@ ndPE::Object::Object(GLfloat x, GLfloat y, GLfloat z, GLfloat angle,
 
 ndPE::Object::~Object(){};
 
+void ndPE::Object::updatePosition(float dt)
+{
+    _pos += _velocity * dt * _velDir;
+}

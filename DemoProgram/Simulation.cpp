@@ -8,11 +8,11 @@
 #include "../ndGE/Timing.h"
 
 
-ndPE::Object *cubeObj, *ballObj;
+ndPE::Object *cubeObj, *ballObj, *myBall;
 
 Simulation::Simulation() :
-    _scrWidth(720),
-    _scrHeight(360),
+    _scrWidth(800),
+    _scrHeight(600),
     _fps(0),
     _runState(simState::RUN)
     {};
@@ -33,12 +33,14 @@ void Simulation::initSystems()
     _window->addShape("res/ball.shp");
 
     // Should really load object descriptions form file
-    _world.makeObject(0.0f, -0.2f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 10.0f, 0.1f, 10.0f, 1.0f, ndPE::ObjectTypes::CUBE);
-    _world.makeObject(0.0f, 1.0f, -6.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, ndPE::ObjectTypes::BALL);
-    cubeObj = _world.makeObject(2.0f, 1.0f, -4.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.5f, 0.5f, 1.0f, ndPE::ObjectTypes::CUBE);
-    ballObj = _world.makeObject(-2.0f, 1.0f, -4.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, ndPE::ObjectTypes::BALL);
+    _world.makeObject(0.0f, -0.2f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 10.0f, 0.1f, 10.0f, -1.0f, ndPE::ObjectTypes::CUBE);
+    myBall = _world.makeObject(0.0f, 1.0f, -6.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, +1.0f, ndPE::ObjectTypes::BALL);
+    cubeObj = _world.makeObject(2.0f, 1.0f, -4.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.5f, 0.5f, -1.0f, ndPE::ObjectTypes::CUBE);
+    ballObj = _world.makeObject(-2.0f, 1.0f, -4.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, -1.0f, ndPE::ObjectTypes::BALL);
 
-    _window->_camera.setPosition(0.0f, 1.0f, 0.0f);
+    myBall->setVelocity(glm::vec3(0.0025f, 0.01f, 0));
+
+    _window->_camera.setPosition(0.0f, 1.0f, 20.0f);
 }
 
 void Simulation::loop()

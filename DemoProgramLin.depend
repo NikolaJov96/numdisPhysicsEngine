@@ -3,33 +3,35 @@
 	<iostream>
 	"Simulation.h"
 
-1479125267 /home/andrija/Documents/git/numdisPhysicsEngine/DemoProgram/Simulation.h
+1479374228 /home/andrija/Documents/git/numdisPhysicsEngine/DemoProgram/Simulation.h
 	"../ndPE/World.h"
 	"../ndGE/ndGE.h"
 	"../ndGE/Window.h"
 	"../ndGE/Camera.h"
+	"../ndGE/InputManager.h"
 
-1479120998 /home/andrija/Documents/git/numdisPhysicsEngine/ndPE/World.h
-	<list>
+1479374228 /home/andrija/Documents/git/numdisPhysicsEngine/ndPE/World.h
+	<vector>
 	"Object.h"
 
-1479123588 /home/andrija/Documents/git/numdisPhysicsEngine/ndPE/Object.h
-	<list>
+1479514756 /home/andrija/Documents/git/numdisPhysicsEngine/ndPE/Object.h
 	<GL/glew.h>
 	<glm/glm.hpp>
 
-1479124771 /home/andrija/Documents/git/numdisPhysicsEngine/ndGE/Window.h
+1479480092 /home/andrija/Documents/git/numdisPhysicsEngine/ndGE/Window.h
 	<string>
+	<vector>
 	<SDL2/SDL.h>
+	<glm/glm.hpp>
 	"ndGE.h"
+	"Camera.h"
 
-1479124487 source:/home/andrija/Documents/git/numdisPhysicsEngine/DemoProgram/Simulation.cpp
+1479514708 source:/home/andrija/Documents/git/numdisPhysicsEngine/DemoProgram/Simulation.cpp
+	"Simulation.h"
 	<iostream>
 	<SDL2/SDL.h>
 	<GL/glew.h>
-	"Simulation.h"
-	"../ndGE/ndGE.h"
-	"../ndGE/ErrorHandler.h"
+	"../ndPE/Object.h"
 	"../ndGE/Timing.h"
 
 1478332539 source:/home/andrija/Documents/git/numdisPhysicsEngine (copy 2)/DemoProgram/main.cpp
@@ -78,7 +80,8 @@
 
 1478332539 /home/andrija/Documents/git/numdisPhysicsEngine (copy 2)/ndGE/Timing.h
 
-1479123263 /home/andrija/Documents/git/numdisPhysicsEngine/ndGE/ndGE.h
+1479498830 /home/andrija/Documents/git/numdisPhysicsEngine/ndGE/ndGE.h
+	<string>
 	<GL/glew.h>
 	<glm/glm.hpp>
 
@@ -93,10 +96,14 @@
 1478332539 /home/andrija/Documents/git/numdisPhysicsEngine/ndGE/ErrorHandler.h
 	<string>
 
-1478332539 /home/andrija/Documents/git/numdisPhysicsEngine/ndGE/Timing.h
+1479374228 /home/andrija/Documents/git/numdisPhysicsEngine/ndGE/Timing.h
 
-1479123955 /home/andrija/Documents/git/numdisPhysicsEngine/ndGE/Camera.h
+1479374228 /home/andrija/Documents/git/numdisPhysicsEngine/ndGE/Camera.h
 	<GL/glew.h>
 	<glm/glm.hpp>
 	<glm/gtx/transform.hpp>
+
+1479374228 /home/andrija/Documents/git/numdisPhysicsEngine/ndGE/InputManager.h
+	<unordered_map>
+	<glm/glm.hpp>
 

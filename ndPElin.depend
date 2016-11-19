@@ -1,10 +1,9 @@
 # depslib dependency file v1.0
-1479122677 source:/home/andrija/Documents/git/numdisPhysicsEngine/ndPE/Object.cpp
-	<iostream>
+1479507959 source:/home/andrija/Documents/git/numdisPhysicsEngine/ndPE/Object.cpp
 	"Object.h"
+	<iostream>
 
-1479123588 /home/andrija/Documents/git/numdisPhysicsEngine/ndPE/Object.h
-	<list>
+1479510744 /home/andrija/Documents/git/numdisPhysicsEngine/ndPE/Object.h
 	<GL/glew.h>
 	<glm/glm.hpp>
 

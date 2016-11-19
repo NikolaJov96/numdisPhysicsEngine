@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-ndPE::World::World() : _gravity(0)
+ndPE::World::World() : _gravity(9.81e-5f)
 {
     std::cout <<"World created" <<std::endl;
 };
@@ -28,8 +28,12 @@ ndPE::Object *ndPE::World::makeObject(GLfloat x, GLfloat y, GLfloat z, GLfloat a
 
 void ndPE::World::makeAStep(float dt)
 {
-    for (auto &obj : _objects)
+    for (auto obj : _objects)
     {
-
+        if (obj->getMass() >= 0) {
+            glm::vec3 newVelocityVector = obj->getVelocity() + glm::vec3(0.0f, -1.0f, 0.0f) * _gravity;
+            obj->setVelocity(newVelocityVector);
+            obj->updatePosition(dt);
+        }
     }
 }

@@ -28,23 +28,30 @@ namespace ndPE {
         glm::vec3 getRotationAxisVector() const { return _rotVec; } //!< Returns glm::vec3 axis vector for object rotation
         glm::vec3 getScaleVector() const { return _scaleVec; }      //!< Returns glm::vec3 vector of object scale
         glm::vec3 getVelocityDirection() const { return _velDir; }  //!< Returns glm::vec3 vector of object velocity direction
-        GLfloat getVelocity() const { return _velocity; }           //!< Returns object velocity
+        GLfloat getVelocityMagnitude() const { return _velocity; }  //!< Returns object velocity magnitude
+        glm::vec3 getVelocity() const {return _velocity * _velDir;} //!< Returns velocity vector
+        float getMass() const { return _mass; }                     //!< Returns object's mass
         ObjectTypes getType() const { return _type; }               //!< Returns object type
 
-        void setVelocity(GLfloat vel) { _velocity = vel; }          //!< Sets object velocity
+        void setVelocity(glm::vec3 velocityVector)                  //!< Sets object velocity
+        {
+            _velocity = glm::length(velocityVector);
+            _velDir = glm::normalize(velocityVector);
+        }
         void setPosition(GLfloat x, GLfloat y, GLfloat z)           //!< Sets object position
             { setPosition(glm::vec3(x, y, z)); }
         void setPosition(glm::vec3 pos)                             //!< Sets object position
             { _pos = pos; }
         void setAngle(GLfloat angle) { _angle = angle; }            //!< Set object angle
+        void updatePosition(float dt);                              //!< Update object's position
     private:
         // following 4 lines must remain the same order as listed
         glm::vec3 _pos;         //!< Position vector
         GLfloat _angle;         //!< Angle in degrees
         glm::vec3 _rotVec;      //!< Rotation axis vector
         glm::vec3 _scaleVec;    //!< scale x, y, z
-        glm::vec3 _velDir;      //!< Velicity rotation vector
-        float _velocity;        //!< Velocity
+        glm::vec3 _velDir;      //!< Velicity direction vector
+        GLfloat _velocity = 0;  //!< Velocity magnitude
         float _mass;            //!< Object mass in kg-s
         ObjectTypes _type;      //!< Object type
     };

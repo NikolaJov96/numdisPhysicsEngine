@@ -44,14 +44,29 @@ namespace ndPE {
             { _pos = pos; }
         void setAngle(GLfloat angle) { _angle = angle; }            //!< Set object angle
         void updatePosition(float dt);                              //!< Update object's position
+        void updateOldInfo()                                        //!< Current position and velocity becomes "old"
+        {
+            _oldPos = _pos;
+            _oldVelDir = _velDir;
+            _oldVelocity = _velocity;
+        }
+
+        friend float findIntersectBB(Object *o1, Object *o2);
+        friend float findIntersectCB(Object *o1, Object *o2);
+        friend void resolveCollisionBB(Object *o1, Object *o2, glm::vec3 intersectPoint);
+        friend void resolveCollisionCB(Object *o1, Object *o2, glm::vec3 intersectPoint);
+
     private:
         // following 4 lines must remain the same order as listed
         glm::vec3 _pos;         //!< Position vector
         GLfloat _angle;         //!< Angle in degrees
         glm::vec3 _rotVec;      //!< Rotation axis vector
         glm::vec3 _scaleVec;    //!< scale x, y, z
-        glm::vec3 _velDir;      //!< Velicity direction vector
-        GLfloat _velocity = 0;  //!< Velocity magnitude
+        glm::vec3 _velDir;      //!< Velocity direction vector
+        GLfloat _velocity;      //!< Velocity magnitude
+        GLfloat _oldVelocity;   //!< Velocity magnitude in prevous iteration
+        glm::vec3 _oldVelDir;   //!< Velocity direction in previous iteration
+        glm::vec3 _oldPos;      //!< Position in previous iteration
         float _mass;            //!< Object mass in kg-s
         ObjectTypes _type;      //!< Object type
     };

@@ -18,7 +18,7 @@ namespace ndPE {
                            GLfloat rotx, GLfloat roty, GLfloat rotz, GLfloat scx,
                            GLfloat scy, GLfloat scz, float mass, ObjectTypes type); //!< Adds new object to the world
         std::vector<std::pair<Object*, Object*>> *getCollisions();                  //!< Returns a pointer to vector of pairs of pointers to collided objects
-        void resolveState();                                                         //!< Finds and resolves collisions
+        void resolveState();                                                        //!< Finds and resolves collisions
         Object *getObject(int ID) const { return _objects[ID]; }                    //!< Get object with desired ID
         int getObjectsNum() { return _objects.size(); }                             //!< Get number of objects
         void makeAStep(float dt);                                                   //!< Updates world state by updating objects states and resolving collisions

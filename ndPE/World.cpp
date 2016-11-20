@@ -35,6 +35,7 @@ void ndPE::World::makeAStep(float dt)
     {
         if (obj->getMass() < 0) continue;
         glm::vec3 newVelocityVector = obj->getVelocity() + glm::vec3(0.0f, -1.0f, 0.0f) * _gravity * dt;
+        obj->updateOldInfo();
         obj->setVelocity(newVelocityVector);
         obj->updatePosition(dt);
     }

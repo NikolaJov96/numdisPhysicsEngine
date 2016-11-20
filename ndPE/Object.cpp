@@ -9,7 +9,8 @@ ndPE::Object::Object(GLfloat x, GLfloat y, GLfloat z, GLfloat angle,
                 _rotVec(rotx, roty, rotz),
                 _scaleVec(scx, scy, scz),
                 _velDir(0, -1, 0),
-                _velocity(0), _mass(mass), _type(type)
+                _velocity(0), _oldVelocity(0), _oldVelDir(0, -1, 0), _oldPos(x, y, z),
+                 _mass(mass), _type(type)
                 {}
 
 ndPE::Object::~Object(){};

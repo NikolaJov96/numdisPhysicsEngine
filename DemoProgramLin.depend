@@ -10,11 +10,11 @@
 	"../ndGE/Camera.h"
 	"../ndGE/InputManager.h"
 
-1479374228 /home/andrija/Documents/git/numdisPhysicsEngine/ndPE/World.h
+1479586482 /home/andrija/Documents/git/numdisPhysicsEngine/ndPE/World.h
 	<vector>
 	"Object.h"
 
-1479514756 /home/andrija/Documents/git/numdisPhysicsEngine/ndPE/Object.h
+1479598454 /home/andrija/Documents/git/numdisPhysicsEngine/ndPE/Object.h
 	<GL/glew.h>
 	<glm/glm.hpp>
 
@@ -26,7 +26,7 @@
 	"ndGE.h"
 	"Camera.h"
 
-1479514708 source:/home/andrija/Documents/git/numdisPhysicsEngine/DemoProgram/Simulation.cpp
+1479586126 source:/home/andrija/Documents/git/numdisPhysicsEngine/DemoProgram/Simulation.cpp
 	"Simulation.h"
 	<iostream>
 	<SDL2/SDL.h>

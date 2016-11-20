@@ -23,7 +23,7 @@ private:
     void loop();                //!< Main simulation loop
     void getInput();            //!< Update ndGE input manager
     void drawFrame();           //!< Draws next frame to screen
-    void manualUpdate();        //!< Make changes at the start of every frame
+    void manualUpdate(int co);  //!< Make changes at the start of every frame
     ndPE::World _world;         //!< ndPE world object that contains all information needed for physics simulation
     ndGE::Window *_window;      //!< ndGE object that contains information about application window
     ndGE::InputManager _input;  //!< ndGE input manager object

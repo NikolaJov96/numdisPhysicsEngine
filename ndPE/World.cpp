@@ -63,6 +63,7 @@ void ndPE::World::resolveState() // Migrate separate resolving functions to the 
     auto collisions = getCollisions();
     while (collisions->size() > 0)
     {
+        // std::cout <<collisions->size() <<"\n";
         for (auto objPair: *collisions)
         {
             ndPE::Object *o1 = objPair.first;
@@ -72,14 +73,12 @@ void ndPE::World::resolveState() // Migrate separate resolving functions to the 
             if (o1t == ndPE::ObjectTypes::BALL && o2t == ndPE::ObjectTypes::CUBE)
             {
                 // std::cout <<"B-C" <<std::endl;
-                o1->setVelocity(-o1->getVelocity());
-                o1->updatePosition(_frameTime);
+                ndPE::resolveCollisionCB(o2, o1, _frameTime);
             }
             else if (o1t == ndPE::ObjectTypes::CUBE && o2t == ndPE::ObjectTypes::BALL)
             {
                 // std::cout <<"C-B" <<std::endl;
-                o2->setVelocity(-o2->getVelocity());
-                o2->updatePosition(_frameTime);
+                ndPE::resolveCollisionCB(o1, o2, _frameTime);
             }
             else if (o1t == ndPE::ObjectTypes::BALL && o2t == ndPE::ObjectTypes::BALL)
             {

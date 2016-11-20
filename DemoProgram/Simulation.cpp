@@ -8,7 +8,7 @@
 #include "../ndGE/Timing.h"
 
 
-ndPE::Object *cubeObj, *ballObj, *myBall;
+ndPE::Object *ballObj;
 
 Simulation::Simulation() :
     _scrWidth(1000),
@@ -36,21 +36,20 @@ void Simulation::initSystems()
 
     // Should really load object descriptions form file
     // Platform
-    _world.makeObject(0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 10.0f, 0.1f, 10.0f, -1.0f, ndPE::ObjectTypes::CUBE);
+    _world.makeObject(0.0f, -0.1f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 10.0f, 0.1f, 10.0f, -1.0f, ndPE::ObjectTypes::CUBE);
 
     // Colliding balls
-    myBall = _world.makeObject(5.0f, 2.0f, -6.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, ndPE::ObjectTypes::BALL);
-    myBall->setVelocity(glm::vec3(-4.0f, 15.0f, 0.0f));
-    myBall = _world.makeObject(-5.0f, 2.0f, -6.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 2.0f, ndPE::ObjectTypes::BALL);
-    myBall->setVelocity(glm::vec3(4.0f, 15.0f, 0.0f));
+    ballObj = _world.makeObject(-7.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, ndPE::ObjectTypes::BALL);
 
-    // Other
-    cubeObj = _world.makeObject(2.0f, 2.0f, -4.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.5f, 0.5f, -1.0f, ndPE::ObjectTypes::CUBE);
-    ballObj = _world.makeObject(-2.0f, 2.0f, -4.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, ndPE::ObjectTypes::BALL);
+    _world.makeObject(2.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, ndPE::ObjectTypes::BALL);
+    _world.makeObject(4.0f, 1.0f, 1.5f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, ndPE::ObjectTypes::BALL);
+    _world.makeObject(4.0f, 1.0f, -1.5f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, ndPE::ObjectTypes::BALL);
+    _world.makeObject(6.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, ndPE::ObjectTypes::BALL);
+    _world.makeObject(6.0f, 1.0f, 3.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, ndPE::ObjectTypes::BALL);
+    _world.makeObject(6.0f, 1.0f, -3.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, ndPE::ObjectTypes::BALL);
 
-    ballObj->setVelocity(glm::vec3(0.0f, 0.0001f, 0.0f)); // Why is dis needed?
-
-    _window->_camera.setPosition(0.0f, 5.0f, 10.0f);
+    _window->_camera.setPosition(0.0f, 15.0f, 15.0f);
+    _window->_camera.setLookAt(0.0f, 0.0f, 2.0f);
 }
 
 void Simulation::loop()
@@ -64,7 +63,7 @@ void Simulation::loop()
         fpsLimiter.begin();                             // Indicate beginning of the iteration to the fpsLimiter
         getInput();                                     // Update input manager
         // manually update the world
-        manualUpdate();
+        manualUpdate(counter);
         // world auto update (without collision resolving)
         float frameTime = fpsLimiter.getDelatTime() / 1000;
         _world.makeAStep(frameTime);                    // automatic collision resolving
@@ -75,7 +74,7 @@ void Simulation::loop()
         drawFrame();                                    // Draw next frame
 
         _fps = fpsLimiter.end();                        // Indicate the end of the iteration to the fpsLimiter
-        if ((counter = (counter + 1)) % 120 == 0) std::cout <<_fps <<std::endl;
+        if (++counter % 120 == 0) std::cout <<_fps <<std::endl;
     }
 }
 
@@ -102,7 +101,7 @@ void Simulation::getInput()
     _input.setMouseCoords(xPos, yPos);
 }
 
-void Simulation::manualUpdate()
+void Simulation::manualUpdate(int co)
 {
     // Translate camera
     if (_input.isKeyDown(SDLK_w)) _window->_camera.updatePositionRelatively(0, 0, CAMERA_TRANSLATION_SPEED);
@@ -117,14 +116,12 @@ void Simulation::manualUpdate()
     if (_input.isKeyDown(SDLK_i)) _window->_camera.updateViewDirection(CAMERA_ROTATION_SPEED, 1, 0, 0);
     if (_input.isKeyDown(SDLK_k)) _window->_camera.updateViewDirection(-CAMERA_ROTATION_SPEED, 1, 0, 0);
     // Other updates
-    cubeObj->setAngle(((int)cubeObj->getAngle() + 3) % 360);
-    ballObj->setAngle(((int)ballObj->getAngle() + 3) % 360);
+    if (co == 240) ballObj->setVelocity(glm::vec3(4.0f, 0.0f, 0.0f));
 }
 
 void Simulation::drawFrame()
 {
-    //int arr[] = {1, 2};
-    _window->resetTransformMaritces(); //(arr);
+    _window->resetTransformMaritces();
     for (int i=0; i<_world.getObjectsNum(); i++)
     {
         ndPE::Object *obj = _world.getObject(i);

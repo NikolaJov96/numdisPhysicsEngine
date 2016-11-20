@@ -35,8 +35,16 @@ namespace ndPE {
 
         void setVelocity(glm::vec3 velocityVector)                  //!< Sets object velocity
         {
-            _velocity = glm::length(velocityVector);
-            _velDir = glm::normalize(velocityVector);
+            if (velocityVector[0] != 0 || velocityVector[1] != 0 || velocityVector[2] != 0)
+            {
+                _velocity = glm::length(velocityVector);
+                _velDir = glm::normalize(velocityVector);
+            }
+            else
+            {
+                _velocity = 0;
+                _velDir = glm::vec3(0, -1, 0);
+            }
         }
         void setPosition(GLfloat x, GLfloat y, GLfloat z)           //!< Sets object position
             { setPosition(glm::vec3(x, y, z)); }
@@ -49,16 +57,12 @@ namespace ndPE {
             _oldPos = _pos;
             _oldAngle = _angle;
             _oldRotVec = _rotVec;
-            _oldVelocity = _velocity;
-            _oldVelDir = _velDir;
         }
         void retrieveOldInfo()                                      //!< Retrieving old data
         {
             _pos = _oldPos;
             _angle = _oldAngle;
             _rotVec = _oldRotVec;
-            //_velocity = _oldVelocity;
-            //_velDir = _oldVelDir;
         }
 
         friend float findIntersectBB(Object *o1, Object *o2, float frameTime);   //!< Finds dt in which two ball have collided during the last frame
@@ -79,8 +83,6 @@ namespace ndPE {
         glm::vec3 _oldPos;      //!< Position in previous iteration
         GLfloat _oldAngle;      //!< Angle in previous iteration
         glm::vec3 _oldRotVec;   //!< Rotation axis vector in previous iteration
-        GLfloat _oldVelocity;   //!< Velocity magnitude in previous iteration
-        glm::vec3 _oldVelDir;   //!< Velocity direction in previous iteration
 
         float _mass;            //!< Object mass in kg-s
         ObjectTypes _type;      //!< Object type

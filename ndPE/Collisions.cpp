@@ -53,8 +53,8 @@ bool ndPE::checkCollisionCB(const Object *o1, const Object *o2)
     glm::vec3 cSca = o1->getScaleVector();
     glm::vec3 bPos = o2->getPosition();
     float rad = o2->getScaleVector()[0];        // Balls will always have same scale in every direction
-    if (bPos[0] < cPos[0] - cSca[0] - rad || bPos[0] > cPos[0] + cSca[0] + rad ) return false;
-    if (bPos[1] < cPos[1] - cSca[1] - rad || bPos[1] > cPos[1] + cSca[1] + rad ) return false;
-    if (bPos[2] < cPos[2] - cSca[2] - rad || bPos[2] > cPos[2] + cSca[2] + rad ) return false;
+    if (bPos[0] <= cPos[0] - cSca[0] - rad || bPos[0] >= cPos[0] + cSca[0] + rad) return false;
+    if (bPos[1] <= cPos[1] - cSca[1] - rad || bPos[1] >= cPos[1] + cSca[1] + rad) return false;
+    if (bPos[2] <= cPos[2] - cSca[2] - rad || bPos[2] >= cPos[2] + cSca[2] + rad) return false;
     return true;
 }

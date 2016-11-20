@@ -35,12 +35,19 @@ void Simulation::initSystems()
     _world.setGravity(9.81);
 
     // Should really load object descriptions form file
+    // Platform
     _world.makeObject(0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 10.0f, 0.1f, 10.0f, -1.0f, ndPE::ObjectTypes::CUBE);
-    myBall = _world.makeObject(0.0f, 2.0f, -6.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, ndPE::ObjectTypes::BALL);
+
+    // Colliding balls
+    myBall = _world.makeObject(5.0f, 2.0f, -6.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, ndPE::ObjectTypes::BALL);
+    myBall->setVelocity(glm::vec3(-4.0f, 15.0f, 0.0f));
+    myBall = _world.makeObject(-5.0f, 2.0f, -6.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 2.0f, ndPE::ObjectTypes::BALL);
+    myBall->setVelocity(glm::vec3(4.0f, 15.0f, 0.0f));
+
+    // Other
     cubeObj = _world.makeObject(2.0f, 2.0f, -4.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.5f, 0.5f, -1.0f, ndPE::ObjectTypes::CUBE);
     ballObj = _world.makeObject(-2.0f, 2.0f, -4.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, ndPE::ObjectTypes::BALL);
 
-    myBall->setVelocity(glm::vec3(2.0f, 15.0f, 0.0f));
     ballObj->setVelocity(glm::vec3(0.0f, 0.0001f, 0.0f)); // Why is dis needed?
 
     _window->_camera.setPosition(0.0f, 5.0f, 10.0f);
@@ -51,6 +58,7 @@ void Simulation::loop()
 
     ndGE::FpsLimiter fpsLimiter;                        // Create FPS limiter object (with 60 FPS desired FPS value)
     drawFrame();
+    int counter = 0;
     while (_runState == simState::RUN)
     {
         fpsLimiter.begin();                             // Indicate beginning of the iteration to the fpsLimiter
@@ -67,7 +75,7 @@ void Simulation::loop()
         drawFrame();                                    // Draw next frame
 
         _fps = fpsLimiter.end();                        // Indicate the end of the iteration to the fpsLimiter
-        if ((int)cubeObj->getAngle() % 45 == 0) std::cout <<_fps <<std::endl;
+        if ((counter = (counter + 1)) % 120 == 0) std::cout <<_fps <<std::endl;
     }
 }
 

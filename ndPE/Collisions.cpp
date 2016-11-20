@@ -1,6 +1,6 @@
 #include "Collisions.h"
 
-#include <iostream>         // Remove if not needed
+#include <iostream>
 
 #include <glm/glm.hpp>
 
@@ -36,9 +36,10 @@ bool ndPE::checkCollision(const ndPE::Object *o1, const ndPE::Object *o2)
 
 bool ndPE::checkCollisionBB(const Object *o1, const Object *o2)
 {
-    glm::vec3 distVec = glm::pow(o1->getPosition() - o2->getPosition(), glm::vec3(2, 2, 2));
-    float distSq = distVec[0] + distVec[1] + distVec[2];
-    return (glm::pow(o1->getScaleVector()[0] + o2->getScaleVector()[0], 2.0f) < distSq ? true : false);
+    glm::vec3 distVec = o1->getPosition() - o2->getPosition();
+    float distSq = distVec[0]*distVec[0] + distVec[1]*distVec[1] + distVec[2]*distVec[2];
+    float radSum = o1->getScaleVector()[0] + o2->getScaleVector()[0];
+    return radSum * radSum > distSq;
 }
 
 bool ndPE::checkCollisionCC(const Object *o1, const Object *o2)

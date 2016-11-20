@@ -20,7 +20,7 @@ namespace ndPE {
         ~Object();
         /**
          * Returns pointer to the _x, which can be used to access
-         * all outher atributes needed for transformation matrix
+         * all other attributes needed for transformation matrix
          */
         GLfloat *getParams() { return &_pos.x; }
         glm::vec3 getPosition() const { return _pos; }              //!< Returns glm::vec3 vector of object position
@@ -47,26 +47,41 @@ namespace ndPE {
         void updateOldInfo()                                        //!< Current position and velocity becomes "old"
         {
             _oldPos = _pos;
-            _oldVelDir = _velDir;
+            _oldAngle = _angle;
+            _oldRotVec = _rotVec;
             _oldVelocity = _velocity;
+            _oldVelDir = _velDir;
+        }
+        void retrieveOldInfo()                                      //!< Retrieving old data
+        {
+            _pos = _oldPos;
+            _angle = _oldAngle;
+            _rotVec = _oldRotVec;
+            //_velocity = _oldVelocity;
+            //_velDir = _oldVelDir;
         }
 
-        friend float findIntersectBB(Object *o1, Object *o2);
-        friend float findIntersectCB(Object *o1, Object *o2);
-        friend void resolveCollisionBB(Object *o1, Object *o2, glm::vec3 intersectPoint);
-        friend void resolveCollisionCB(Object *o1, Object *o2, glm::vec3 intersectPoint);
+        friend float findIntersectBB(Object *o1, Object *o2, float frameTime);   //!< Finds dt in which two ball have collided during the last frame
+        friend float findIntersectCB(Object *o1, Object *o2, float frameTime);   //!< Finds dt in which cube and ball have collided during the last frame
+        friend void resolveCollisionBB(Object *o1, Object *o2, float frameTime); //!< Updates states of collided balls
+        friend void resolveCollisionCB(Object *o1, Object *o2, float frameTime); //!< Updates states of collided cube and ball
 
     private:
         // following 4 lines must remain the same order as listed
         glm::vec3 _pos;         //!< Position vector
         GLfloat _angle;         //!< Angle in degrees
         glm::vec3 _rotVec;      //!< Rotation axis vector
-        glm::vec3 _scaleVec;    //!< scale x, y, z
-        glm::vec3 _velDir;      //!< Velocity direction vector
+        glm::vec3 _scaleVec;    //!< Object scale in x, y and z axis
+
         GLfloat _velocity;      //!< Velocity magnitude
-        GLfloat _oldVelocity;   //!< Velocity magnitude in prevous iteration
-        glm::vec3 _oldVelDir;   //!< Velocity direction in previous iteration
+        glm::vec3 _velDir;      //!< Velocity direction vector
+
         glm::vec3 _oldPos;      //!< Position in previous iteration
+        GLfloat _oldAngle;      //!< Angle in previous iteration
+        glm::vec3 _oldRotVec;   //!< Rotation axis vector in previous iteration
+        GLfloat _oldVelocity;   //!< Velocity magnitude in previous iteration
+        glm::vec3 _oldVelDir;   //!< Velocity direction in previous iteration
+
         float _mass;            //!< Object mass in kg-s
         ObjectTypes _type;      //!< Object type
     };

@@ -41,6 +41,8 @@
 				</Linker>
 			</Target>
 		</Build>
+		<Unit filename="ndPE/CollisionResolving.cpp" />
+		<Unit filename="ndPE/CollisionResolving.h" />
 		<Unit filename="ndPE/Collisions.cpp" />
 		<Unit filename="ndPE/Collisions.h" />
 		<Unit filename="ndPE/Object.cpp" />

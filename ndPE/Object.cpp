@@ -3,15 +3,16 @@
 #include <iostream>
 
 ndPE::Object::Object(GLfloat x, GLfloat y, GLfloat z, GLfloat angle,
-                GLfloat rotx, GLfloat roty, GLfloat rotz, GLfloat scx,
-                GLfloat scy, GLfloat scz, float mass, ObjectTypes type):
-                _pos(x, y, z), _angle(angle),
-                _rotVec(rotx, roty, rotz),
-                _scaleVec(scx, scy, scz),
-                _velDir(0, -1, 0),
-                _velocity(0), _oldVelocity(0), _oldVelDir(0, -1, 0), _oldPos(x, y, z),
-                 _mass(mass), _type(type)
-                {}
+                     GLfloat rotx, GLfloat roty, GLfloat rotz, GLfloat scx,
+                     GLfloat scy, GLfloat scz, float mass, ObjectTypes type):
+                         _pos(x, y, z), _angle(angle),
+                         _rotVec(rotx, roty, rotz),
+                         _scaleVec(scx, scy, scz),
+                         _velocity(0), _velDir(0, -1, 0),
+                         _mass(mass), _type(type)
+{
+    updateOldInfo();
+}
 
 ndPE::Object::~Object(){};
 

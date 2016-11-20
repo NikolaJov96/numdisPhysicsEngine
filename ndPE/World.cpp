@@ -3,6 +3,7 @@
 #include <iostream>
 
 #include "Collisions.h"
+#include "CollisionResolving.h"
 
 ndPE::World::World(float gravity) : _gravity(gravity)
 {
@@ -60,22 +61,34 @@ std::vector<std::pair<ndPE::Object*, ndPE::Object*>> *ndPE::World::getCollisions
 void ndPE::World::resolveState() // Migrate separate resolving functions to the new file
 {
     auto collisions = getCollisions();
-    for (auto objPair: *collisions)
+    while (collisions->size() > 0)
     {
-        ndPE::Object *o1 = objPair.first;
-        ndPE::Object *o2 = objPair.second;
-        auto o1t = objPair.first->getType();
-        auto o2t = objPair.second->getType();
-        if (o1t == ndPE::ObjectTypes::BALL && o2t == ndPE::ObjectTypes::CUBE)
+        for (auto objPair: *collisions)
         {
-            o1->setVelocity(-o1->getVelocity());
-            o1->updatePosition(_frameTime);
+            ndPE::Object *o1 = objPair.first;
+            ndPE::Object *o2 = objPair.second;
+            auto o1t = objPair.first->getType();
+            auto o2t = objPair.second->getType();
+            if (o1t == ndPE::ObjectTypes::BALL && o2t == ndPE::ObjectTypes::CUBE)
+            {
+                // std::cout <<"B-C" <<std::endl;
+                o1->setVelocity(-o1->getVelocity());
+                o1->updatePosition(_frameTime);
+            }
+            else if (o1t == ndPE::ObjectTypes::CUBE && o2t == ndPE::ObjectTypes::BALL)
+            {
+                // std::cout <<"C-B" <<std::endl;
+                o2->setVelocity(-o2->getVelocity());
+                o2->updatePosition(_frameTime);
+            }
+            else if (o1t == ndPE::ObjectTypes::BALL && o2t == ndPE::ObjectTypes::BALL)
+            {
+                // std::cout <<"B-B" <<std::endl;
+                ndPE::resolveCollisionBB(o1, o2, _frameTime);
+            }
         }
-        else if (o1t == ndPE::ObjectTypes::CUBE && o2t == ndPE::ObjectTypes::BALL)
-        {
-            o2->setVelocity(-o2->getVelocity());
-            o2->updatePosition(_frameTime);
-        }
+        delete collisions;
+        collisions = getCollisions();
     }
     delete collisions;
 }

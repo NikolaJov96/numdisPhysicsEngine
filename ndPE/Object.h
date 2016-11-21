@@ -70,19 +70,26 @@ namespace ndPE {
         friend void resolveCollisionBB(Object *o1, Object *o2, float frameTime); //!< Updates states of collided balls
         friend void resolveCollisionCB(Object *o1, Object *o2, float frameTime); //!< Updates states of collided cube and ball
 
+        friend bool checkCollision(const Object *o1, const Object *o2);    //!< Determines which collision detection function to call
+        friend bool checkCollisionBB(const Object *o1, const Object *o2);  //!< Determines if two ball have collided
+        friend bool checkCollisionCC(const Object *o1, const Object *o2);  //!< Determines if two cubes have collided
+        friend bool checkCollisionCB(const Object *o1, const Object *o2);  //!< Determines if two cube and ball (respectively) have collided
+
     private:
         // following 4 lines must remain the same order as listed
         glm::vec3 _pos;         //!< Position vector
         GLfloat _angle;         //!< Angle in degrees
-        glm::vec3 _rotVec;      //!< Rotation axis vector
+        glm::vec3 _rotVec;      //!< Rotation axis vector (for rendering)
         glm::vec3 _scaleVec;    //!< Object scale in x, y and z axis
 
         GLfloat _velocity;      //!< Velocity magnitude
         glm::vec3 _velDir;      //!< Velocity direction vector
+        GLfloat _angVel;        //!< Angular velocity
+        glm::vec3 _rotAxis;     //!< Vector around which object has angular velocity (_angVel)
 
         glm::vec3 _oldPos;      //!< Position in previous iteration
         GLfloat _oldAngle;      //!< Angle in previous iteration
-        glm::vec3 _oldRotVec;   //!< Rotation axis vector in previous iteration
+        glm::vec3 _oldRotVec;   //!< Rotation axis vector (for rendering) in previous iteration
 
         float _mass;            //!< Object mass in kg-s
         ObjectTypes _type;      //!< Object type

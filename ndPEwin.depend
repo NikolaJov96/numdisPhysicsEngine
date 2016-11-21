@@ -1,1 +1,36 @@
 # depslib dependency file v1.0
+1479697211 source:c:\users\nikola\documents\git\numdisphysicsengine\ndpe\collisionresolving.cpp
+	"CollisionResolving.h"
+	<iostream>
+	<glm/glm.hpp>
+	"Collisions.h"
+
+1479606104 c:\users\nikola\documents\git\numdisphysicsengine\ndpe\collisionresolving.h
+	"Object.h"
+
+1479697140 c:\users\nikola\documents\git\numdisphysicsengine\ndpe\object.h
+	<GL/glew.h>
+	<glm/glm.hpp>
+
+1479522149 c:\users\nikola\documents\git\numdisphysicsengine\ndpe\collisions.h
+	"Object.h"
+
+1479686712 source:c:\users\nikola\documents\git\numdisphysicsengine\ndpe\collisions.cpp
+	"Collisions.h"
+	<iostream>
+	<glm/glm.hpp>
+
+1479697249 source:c:\users\nikola\documents\git\numdisphysicsengine\ndpe\object.cpp
+	"Object.h"
+	<iostream>
+
+1479697764 source:c:\users\nikola\documents\git\numdisphysicsengine\ndpe\world.cpp
+	"World.h"
+	<iostream>
+	"Collisions.h"
+	"CollisionResolving.h"
+
+1479606486 c:\users\nikola\documents\git\numdisphysicsengine\ndpe\world.h
+	<vector>
+	"Object.h"
+

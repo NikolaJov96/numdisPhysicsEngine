@@ -37,6 +37,8 @@ void Simulation::initSystems()
     // Should really load object descriptions form file
     // Platform
     _world.makeObject(0.0f, -0.1f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 10.0f, 0.1f, 10.0f, -1.0f, ndPE::ObjectTypes::CUBE);
+    _world.makeObject(0.0f, 10.0f, -10.2f, 0.0f, 1.0f, 0.0f, 0.0f, 10.0f, 10.0f, 0.2f, -1.0f, ndPE::ObjectTypes::CUBE);
+    _world.makeObject(10.2f, 10.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.1f, 10.0f, 10.0f, -1.0f, ndPE::ObjectTypes::CUBE);
 
     // Colliding balls
     ballObj = _world.makeObject(-7.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, ndPE::ObjectTypes::BALL);
@@ -47,6 +49,9 @@ void Simulation::initSystems()
     _world.makeObject(6.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, ndPE::ObjectTypes::BALL);
     _world.makeObject(6.0f, 1.0f, 3.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, ndPE::ObjectTypes::BALL);
     _world.makeObject(6.0f, 1.0f, -3.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, ndPE::ObjectTypes::BALL);
+
+    _world.makeObject(-10.1f, 5.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, ndPE::ObjectTypes::BALL);
+    _world.makeObject(-10.1f, 5.0f, 10.1f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, ndPE::ObjectTypes::BALL);
 
     _window->_camera.setPosition(0.0f, 15.0f, 15.0f);
     _window->_camera.setLookAt(0.0f, 0.0f, 2.0f);
@@ -116,7 +121,7 @@ void Simulation::manualUpdate(int co)
     if (_input.isKeyDown(SDLK_i)) _window->_camera.updateViewDirection(CAMERA_ROTATION_SPEED, 1, 0, 0);
     if (_input.isKeyDown(SDLK_k)) _window->_camera.updateViewDirection(-CAMERA_ROTATION_SPEED, 1, 0, 0);
     // Other updates
-    if (co == 240) ballObj->setVelocity(glm::vec3(4.0f, 0.0f, 0.0f));
+    if (co == 60) ballObj->setVelocity(glm::vec3(4.0f, 1.0f, 0.0f));
 }
 
 void Simulation::drawFrame()

@@ -18,5 +18,6 @@ ndPE::Object::~Object(){};
 
 void ndPE::Object::updatePosition(float dt)
 {
+    /* _angle = int(_angle + _angVel * dt) % 360; */
     _pos += _velocity * dt * _velDir;
 }

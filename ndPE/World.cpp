@@ -35,9 +35,8 @@ void ndPE::World::makeAStep(float dt)
     for (auto obj : _objects)
     {
         if (obj->getMass() < 0) continue;
-        glm::vec3 newVelocityVector = obj->getVelocity() + glm::vec3(0.0f, -1.0f, 0.0f) * _gravity * dt;
         obj->updateOldInfo();
-        obj->setVelocity(newVelocityVector);
+        obj->setVelocity(obj->getVelocity() + glm::vec3(0.0f, -1.0f, 0.0f) * _gravity * dt);
         obj->updatePosition(dt);
     }
 }
@@ -73,17 +72,17 @@ void ndPE::World::resolveState() // Migrate separate resolving functions to the 
             if (o1t == ndPE::ObjectTypes::BALL && o2t == ndPE::ObjectTypes::CUBE)
             {
                 // std::cout <<"B-C" <<std::endl;
-                ndPE::resolveCollisionCB(o2, o1, _frameTime);
+                ndPE::resolveCollisionCB(o2, o1, _frameTime, _gravity);
             }
             else if (o1t == ndPE::ObjectTypes::CUBE && o2t == ndPE::ObjectTypes::BALL)
             {
                 // std::cout <<"C-B" <<std::endl;
-                ndPE::resolveCollisionCB(o1, o2, _frameTime);
+                ndPE::resolveCollisionCB(o1, o2, _frameTime, _gravity);
             }
             else if (o1t == ndPE::ObjectTypes::BALL && o2t == ndPE::ObjectTypes::BALL)
             {
                 // std::cout <<"B-B" <<std::endl;
-                ndPE::resolveCollisionBB(o1, o2, _frameTime);
+                ndPE::resolveCollisionBB(o1, o2, _frameTime, _gravity);
             }
         }
         delete collisions;

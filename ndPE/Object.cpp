@@ -9,6 +9,7 @@ ndPE::Object::Object(GLfloat x, GLfloat y, GLfloat z, GLfloat angle,
                          _rotVec(rotx, roty, rotz),
                          _scaleVec(scx, scy, scz),
                          _velocity(0), _velDir(0, -1, 0),
+                         _angVel(0), _angVelVec(0, 1, 0),
                          _mass(mass), _type(type)
 {
     updateOldInfo();

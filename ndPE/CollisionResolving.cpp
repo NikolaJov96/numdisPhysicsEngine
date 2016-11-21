@@ -5,54 +5,68 @@
 
 #include "Collisions.h"
 
-float ndPE::findIntersectBB(ndPE::Object *o1, ndPE::Object *o2, float frameTime)
+float ndPE::findIntersectBB(ndPE::Object *o1, ndPE::Object *o2, float dt, float g)
 {
-    float lt = 0, rt = frameTime, mt = (rt + lt) / 2;
-    bool separated = !ndPE::checkCollisionBB(o1, o2);
-    while (rt - lt > 0.001f || !separated) // Use better measure
+    float lt = 0, rt = dt, mt = (rt + lt) / 2;
+    bool separated = false;
+    while (rt - lt > 0.001f) // Use better measure
     {
         o1->retrieveOldInfo();
         o2->retrieveOldInfo();
         mt = (rt + lt) / 2;
+        o1->setVelocity(o1->getVelocity() + glm::vec3(0.0f, -g*mt, 0.0f));
+        o2->setVelocity(o2->getVelocity() + glm::vec3(0.0f, -g*mt, 0.0f));
         o1->updatePosition(mt);
         o2->updatePosition(mt);
         separated = !ndPE::checkCollisionBB(o1, o2);
         if (separated) lt = mt;
         else rt = mt;
     }
-    o1->updateOldInfo();
-    o2->updateOldInfo();
+    o1->retrieveOldInfo();
+    o2->retrieveOldInfo();
+    o1->setVelocity(o1->getVelocity() + glm::vec3(0.0f, -g*lt, 0.0f));
+    o2->setVelocity(o2->getVelocity() + glm::vec3(0.0f, -g*lt, 0.0f));
+    o1->updatePosition(lt);
+    o2->updatePosition(lt);
     return mt;
 }
 
-float ndPE::findIntersectCB(ndPE::Object *o1, ndPE::Object *o2, float frameTime)
+float ndPE::findIntersectCB(ndPE::Object *o1, ndPE::Object *o2, float dt, float g)
 {
-    float lt = 0, rt = frameTime, mt = (rt + lt) / 2;
+    float lt = 0, rt = dt, mt = (rt + lt) / 2;
     bool separated = !ndPE::checkCollisionCB(o1, o2);
-    while (rt - lt > 0.001f || !separated) // Use better measure
+    while (rt - lt > 0.001f) // Use better measure
     {
-        // std::cout <<rt <<" " <<lt <<"\n";
         o2->retrieveOldInfo();
         mt = (rt + lt) / 2;
+        o2->setVelocity(o2->getVelocity() + glm::vec3(0.0f, -g*mt, 0.0f));
         o2->updatePosition(mt);
         separated = !ndPE::checkCollisionCB(o1, o2);
         if (separated) lt = mt;
         else rt = mt;
     }
-    o2->updateOldInfo();
+    o2->retrieveOldInfo();
+    o2->setVelocity(o2->getVelocity() + glm::vec3(0.0f, -g*lt, 0.0f));
+    o2->updatePosition(lt);
     return mt;
 }
 
-void ndPE::resolveCollisionBB(ndPE::Object *o1, ndPE::Object *o2, float frameTime)
+void ndPE::resolveCollisionBB(ndPE::Object *o1, ndPE::Object *o2, float dt, float g)
 {
-    float remTime = frameTime - ndPE::findIntersectBB(o1, o2, frameTime);   // remaining time until end of the frame
+    float remTime = dt - ndPE::findIntersectBB(o1, o2, dt, g);   // remaining time until end of the frame
 
-	glm::vec3 impulseVec = glm::normalize(o1->_pos - o2->_pos) * glm::length(o2->getVelocity()*o2->_mass - o1->getVelocity()*o1->_mass); // obj1 impulse
+    o1->setVelocity(o1->getVelocity() + glm::vec3(0.0f, -g*remTime, 0.0f));
+    o2->setVelocity(o2->getVelocity() + glm::vec3(0.0f, -g*remTime, 0.0f));
+
+	glm::vec3 impulseVec = glm::normalize(o1->_pos - o2->_pos) *
+        glm::length(o2->getVelocity()*o2->_mass - o1->getVelocity()*o1->_mass); // obj1 impulse
+
 	glm::vec3 newVel1 = o1->getVelocity() + (1 / o1->_mass) * impulseVec;
 	glm::vec3 newVel2 = o2->getVelocity() - (1 / o2->_mass) * impulseVec;
 
 	o1->setVelocity(newVel1);
 	o2->setVelocity(newVel2);
+
     /*
     glm::vec3 newRotVec1 = glm::cross(impulseVec, newVel1); // basically, velocity normal component x velocity
     glm::vec3 newRotVec2 = glm::cross(impulseVec, newVel2);
@@ -69,9 +83,10 @@ void ndPE::resolveCollisionBB(ndPE::Object *o1, ndPE::Object *o2, float frameTim
     o2->updatePosition(remTime);
 }
 
-void ndPE::resolveCollisionCB(ndPE::Object *o1, ndPE::Object *o2, float frameTime)
+void ndPE::resolveCollisionCB(ndPE::Object *o1, ndPE::Object *o2, float dt, float g)
 {
-    float remTime = frameTime - ndPE::findIntersectCB(o1, o2, frameTime);
+    float remTime = dt - ndPE::findIntersectCB(o1, o2, dt, g);
+    o2->setVelocity(o2->getVelocity() + glm::vec3(0.0f, -g*remTime, 0.0f));
     // Opposite vertexes of the cube
     float corns[] = {
         o1->_pos[0] - o1->_scaleVec[0],

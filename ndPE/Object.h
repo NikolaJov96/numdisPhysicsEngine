@@ -57,18 +57,26 @@ namespace ndPE {
             _oldPos = _pos;
             _oldAngle = _angle;
             _oldRotVec = _rotVec;
+            _oldVelocity = _velocity;
+            _oldVelDir = _velDir;
+            _oldAngVel = _angVel;
+            _oldAngVelVec = _angVelVec;
         }
         void retrieveOldInfo()                                      //!< Retrieving old data
         {
             _pos = _oldPos;
             _angle = _oldAngle;
             _rotVec = _oldRotVec;
+            _velocity = _oldVelocity;
+            _velDir = _oldVelDir;
+            _angVel = _oldAngVel;
+            _angVelVec = _oldAngVelVec;
         }
 
-        friend float findIntersectBB(Object *o1, Object *o2, float frameTime);   //!< Finds dt in which two ball have collided during the last frame
-        friend float findIntersectCB(Object *o1, Object *o2, float frameTime);   //!< Finds dt in which cube and ball have collided during the last frame
-        friend void resolveCollisionBB(Object *o1, Object *o2, float frameTime); //!< Updates states of collided balls
-        friend void resolveCollisionCB(Object *o1, Object *o2, float frameTime); //!< Updates states of collided cube and ball
+        friend float findIntersectBB(Object *o1, Object *o2, float dt, float g);   //!< Finds dt in which two ball have collided during the last frame
+        friend float findIntersectCB(Object *o1, Object *o2, float dt, float g);   //!< Finds dt in which cube and ball have collided during the last frame
+        friend void resolveCollisionBB(Object *o1, Object *o2, float dt, float g); //!< Updates states of collided balls
+        friend void resolveCollisionCB(Object *o1, Object *o2, float dt, float g); //!< Updates states of collided cube and ball
 
         friend bool checkCollision(const Object *o1, const Object *o2);    //!< Determines which collision detection function to call
         friend bool checkCollisionBB(const Object *o1, const Object *o2);  //!< Determines if two ball have collided
@@ -85,11 +93,16 @@ namespace ndPE {
         GLfloat _velocity;      //!< Velocity magnitude
         glm::vec3 _velDir;      //!< Velocity direction vector
         GLfloat _angVel;        //!< Angular velocity
-        glm::vec3 _rotAxis;     //!< Vector around which object has angular velocity (_angVel)
+        glm::vec3 _angVelVec;   //!< Vector around which object has angular velocity (_angVel)
 
         glm::vec3 _oldPos;      //!< Position in previous iteration
         GLfloat _oldAngle;      //!< Angle in previous iteration
         glm::vec3 _oldRotVec;   //!< Rotation axis vector (for rendering) in previous iteration
+
+        GLfloat _oldVelocity;   //!< Velocity magnitude in previous iteration
+        glm::vec3 _oldVelDir;   //!< Velocity direction vector in previous iteration
+        GLfloat _oldAngVel;     //!< Angular velocity in previous iteration
+        glm::vec3 _oldAngVelVec;//!< Vector around which object has angular velocity in previous iteration
 
         float _mass;            //!< Object mass in kg-s
         ObjectTypes _type;      //!< Object type

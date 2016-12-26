@@ -17,6 +17,7 @@ namespace ndPE {
         Object(GLfloat x, GLfloat y, GLfloat z, GLfloat angle,
                 GLfloat rotx, GLfloat roty, GLfloat rotz, GLfloat scx,
                 GLfloat scy, GLfloat scz, float mass, ObjectTypes);
+        Object() = default;
         ~Object();
         /**
          * Returns pointer to the _x, which can be used to access
@@ -25,13 +26,14 @@ namespace ndPE {
         GLfloat *getParams() { return &_pos.x; }
         glm::vec3 getPosition() const { return _pos; }              //!< Returns glm::vec3 vector of object position
         GLfloat getAngle() const { return _angle; }                 //!< Returns angel of the object in degrees
-        glm::vec3 getRotationAxisVector() const { return _rotVec; } //!< Returns glm::vec3 axis vector for object rotation
+        glm::vec3 getRotationAxisVector() const { return _rotVec; } //!< Returns glm::vec3 axis vector for object rotation (for rendering)
         glm::vec3 getScaleVector() const { return _scaleVec; }      //!< Returns glm::vec3 vector of object scale
         glm::vec3 getVelocityDirection() const { return _velDir; }  //!< Returns glm::vec3 vector of object velocity direction
         GLfloat getVelocityMagnitude() const { return _velocity; }  //!< Returns object velocity magnitude
         glm::vec3 getVelocity() const {return _velocity * _velDir;} //!< Returns velocity vector
         float getMass() const { return _mass; }                     //!< Returns object's mass
         ObjectTypes getType() const { return _type; }               //!< Returns object type
+        bool isCollided() const { return _collided; }               //!< Returns if object has collided
 
         void setVelocity(glm::vec3 velocityVector)                  //!< Sets object velocity
         {
@@ -51,37 +53,49 @@ namespace ndPE {
         void setPosition(glm::vec3 pos)                             //!< Sets object position
             { _pos = pos; }
         void setAngle(GLfloat angle) { _angle = angle; }            //!< Set object angle
+        void setRotationAxisVector(GLfloat x, GLfloat y, GLfloat z) //!< Sets glm::vec3 axis vector for object rotation (for rendering)
+        { return setRotationAxisVector(glm::vec3(x, y, z)); }
+        void setRotationAxisVector(glm::vec3 vec)                   //!< Sets glm::vec3 axis vector for object rotation (for rendering)
+        { _rotVec = glm::normalize(vec); }
+        void setAngleVelVector(GLfloat x, GLfloat y, GLfloat z)     //!< Sets glm::vec3 angle velocity vector for object rotation
+        { return setAngleVelVector(glm::vec3(x, y, z)); }
+        void setAngleVelVector(glm::vec3 vec)                       //!< Sets glm::vec3 angle velocity vector for object rotation
+        { _angVelVec = glm::normalize(vec); }
+        void setAngleVelocity(GLfloat vel) { _angVel = vel; }       //!< Sets objects angular velocity
+        void setCollided(bool flag) { _collided = flag; }           //!< Sets the collided flag
         void updatePosition(float dt);                              //!< Update object's position
         void updateOldInfo()                                        //!< Current position and velocity becomes "old"
         {
-            _oldPos = _pos;
-            _oldAngle = _angle;
-            _oldRotVec = _rotVec;
-            _oldVelocity = _velocity;
-            _oldVelDir = _velDir;
-            _oldAngVel = _angVel;
-            _oldAngVelVec = _angVelVec;
+            // _oldPos = _pos;
+            // _oldAngle = _angle;
+            // _oldRotVec = _rotVec;
+            // _oldVelocity = _velocity;
+            // _oldVelDir = _velDir;
+            // _oldAngVel = _angVel;
+            // _oldAngVelVec = _angVelVec;
         }
         void retrieveOldInfo()                                      //!< Retrieving old data
         {
-            _pos = _oldPos;
-            _angle = _oldAngle;
-            _rotVec = _oldRotVec;
-            _velocity = _oldVelocity;
-            _velDir = _oldVelDir;
-            _angVel = _oldAngVel;
-            _angVelVec = _oldAngVelVec;
+            // _pos = _oldPos;
+            // _angle = _oldAngle;
+            // _rotVec = _oldRotVec;
+            // _velocity = _oldVelocity;
+            // _velDir = _oldVelDir;
+            // _angVel = _oldAngVel;
+            // _angVelVec = _oldAngVelVec;
         }
 
         friend float findIntersectBB(Object *o1, Object *o2, float dt, float g);   //!< Finds dt in which two ball have collided during the last frame
         friend float findIntersectCB(Object *o1, Object *o2, float dt, float g);   //!< Finds dt in which cube and ball have collided during the last frame
         friend void resolveCollisionBB(Object *o1, Object *o2, float dt, float g); //!< Updates states of collided balls
-        friend void resolveCollisionCB(Object *o1, Object *o2, float dt, float g); //!< Updates states of collided cube and ball
+        friend void resolveCollisionCB(Object *o1, Object *o2, float dt, float g, float amort); //!< Updates states of collided cube and ball
 
         friend bool checkCollision(const Object *o1, const Object *o2);    //!< Determines which collision detection function to call
         friend bool checkCollisionBB(const Object *o1, const Object *o2);  //!< Determines if two ball have collided
         friend bool checkCollisionCC(const Object *o1, const Object *o2);  //!< Determines if two cubes have collided
         friend bool checkCollisionCB(const Object *o1, const Object *o2);  //!< Determines if two cube and ball (respectively) have collided
+
+        Object *oldObj;         //!< Pointer to the object with previous characteristics of the current object
 
     private:
         // following 4 lines must remain the same order as listed
@@ -95,14 +109,7 @@ namespace ndPE {
         GLfloat _angVel;        //!< Angular velocity
         glm::vec3 _angVelVec;   //!< Vector around which object has angular velocity (_angVel)
 
-        glm::vec3 _oldPos;      //!< Position in previous iteration
-        GLfloat _oldAngle;      //!< Angle in previous iteration
-        glm::vec3 _oldRotVec;   //!< Rotation axis vector (for rendering) in previous iteration
-
-        GLfloat _oldVelocity;   //!< Velocity magnitude in previous iteration
-        glm::vec3 _oldVelDir;   //!< Velocity direction vector in previous iteration
-        GLfloat _oldAngVel;     //!< Angular velocity in previous iteration
-        glm::vec3 _oldAngVelVec;//!< Vector around which object has angular velocity in previous iteration
+        bool _collided;          //!< Flags that object encountered collision in current frame
 
         float _mass;            //!< Object mass in kg-s
         ObjectTypes _type;      //!< Object type

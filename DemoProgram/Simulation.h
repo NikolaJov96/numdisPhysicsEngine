@@ -30,6 +30,7 @@ private:
 
     const float CAMERA_TRANSLATION_SPEED = 0.1f;    //!< Camera translation speed in units (meters) per second
     const float CAMERA_ROTATION_SPEED = 2.0f;       //!< Camera rotation speed in degrees per second
+    const float MAX_FRAME_TIME = 0.05f;             //!< Maximal time that will be sent to the simulation as a time step
 
     int _scrWidth = 720;        //!< Screen width
     int _scrHeight = 360;       //!< Screen height

@@ -123,7 +123,7 @@ GLuint ndGE::Window::installShaders()
 
 ndGE::Window::Window(const std::string &windowName, int width, int height) :
     _width(width), _height(height),
-    _projectionMatrix(glm::perspective(CONV_ANGLE(60.0f), ((float)width) / height, 0.1f, 30.0f))
+    _projectionMatrix(glm::perspective(CONV_ANGLE(60.0f), ((float)width) / height, 0.1f, 120.0f))
 {
     _width = width;
     _height = height;

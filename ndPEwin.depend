@@ -1,36 +1,38 @@
 # depslib dependency file v1.0
-1479765584 source:c:\users\nikola\documents\git\numdisphysicsengine\ndpe\collisionresolving.cpp
-	"CollisionResolving.h"
-	<iostream>
-	<glm/glm.hpp>
-	"Collisions.h"
-
-1479744631 c:\users\nikola\documents\git\numdisphysicsengine\ndpe\collisionresolving.h
-	"Object.h"
-
-1479744605 c:\users\nikola\documents\git\numdisphysicsengine\ndpe\object.h
-	<GL/glew.h>
-	<glm/glm.hpp>
-
-1479522149 c:\users\nikola\documents\git\numdisphysicsengine\ndpe\collisions.h
-	"Object.h"
-
 1479752154 source:c:\users\nikola\documents\git\numdisphysicsengine\ndpe\collisions.cpp
 	"Collisions.h"
 	<iostream>
 	<glm/glm.hpp>
 
-1479743356 source:c:\users\nikola\documents\git\numdisphysicsengine\ndpe\object.cpp
+1482773869 c:\users\nikola\documents\git\numdisphysicsengine\ndpe\collisions.h
+	"Object.h"
+
+1482773883 c:\users\nikola\documents\git\numdisphysicsengine\ndpe\object.h
+	<GL/glew.h>
+	<glm/glm.hpp>
+
+1482760500 source:c:\users\nikola\documents\git\numdisphysicsengine\ndpe\object.cpp
 	"Object.h"
 	<iostream>
+	<glm/glm.hpp>
 
-1479744646 source:c:\users\nikola\documents\git\numdisphysicsengine\ndpe\world.cpp
+1482774359 source:c:\users\nikola\documents\git\numdisphysicsengine\ndpe\collisionresolving.cpp
+	"CollisionResolving.h"
+	<iostream>
+	<glm/glm.hpp>
+	<GL/glew.h>
+	"Collisions.h"
+
+1482773788 c:\users\nikola\documents\git\numdisphysicsengine\ndpe\collisionresolving.h
+	"Object.h"
+
+1482774026 source:c:\users\nikola\documents\git\numdisphysicsengine\ndpe\world.cpp
 	"World.h"
 	<iostream>
 	"Collisions.h"
 	"CollisionResolving.h"
 
-1479606486 c:\users\nikola\documents\git\numdisphysicsengine\ndpe\world.h
+1482774128 c:\users\nikola\documents\git\numdisphysicsengine\ndpe\world.h
 	<vector>
 	"Object.h"
 

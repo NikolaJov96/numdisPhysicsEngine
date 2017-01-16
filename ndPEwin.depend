@@ -7,7 +7,7 @@
 1482773869 c:\users\nikola\documents\git\numdisphysicsengine\ndpe\collisions.h
 	"Object.h"
 
-1482773883 c:\users\nikola\documents\git\numdisphysicsengine\ndpe\object.h
+1482775261 c:\users\nikola\documents\git\numdisphysicsengine\ndpe\object.h
 	<GL/glew.h>
 	<glm/glm.hpp>
 
@@ -16,17 +16,17 @@
 	<iostream>
 	<glm/glm.hpp>
 
-1482774359 source:c:\users\nikola\documents\git\numdisphysicsengine\ndpe\collisionresolving.cpp
+1482775304 source:c:\users\nikola\documents\git\numdisphysicsengine\ndpe\collisionresolving.cpp
 	"CollisionResolving.h"
 	<iostream>
 	<glm/glm.hpp>
 	<GL/glew.h>
 	"Collisions.h"
 
-1482773788 c:\users\nikola\documents\git\numdisphysicsengine\ndpe\collisionresolving.h
+1482775254 c:\users\nikola\documents\git\numdisphysicsengine\ndpe\collisionresolving.h
 	"Object.h"
 
-1482774026 source:c:\users\nikola\documents\git\numdisphysicsengine\ndpe\world.cpp
+1482775416 source:c:\users\nikola\documents\git\numdisphysicsengine\ndpe\world.cpp
 	"World.h"
 	<iostream>
 	"Collisions.h"

@@ -33,7 +33,7 @@ void Simulation::initSystems()
     _window->addShape("res/ball.shp");
 
     _world.setGravity(9.81);
-    _world.setAmortCoef(0.8);
+    _world.setAmortCoef(0.7);
 
     // Should really load object descriptions form file
     // Platform
@@ -43,10 +43,12 @@ void Simulation::initSystems()
         _world.makeObject(0.0f - 20*i, 2.5f - 5*i, -10.1f, 0.0f, 1.0f, 0.0f, 0.0f, 10.0f, 2.5f, 0.1f, -1.0f, ndPE::ObjectTypes::CUBE);
         _world.makeObject(0.0f - 20*i, 2.5f - 5*i, 10.1f, 0.0f, 1.0f, 0.0f, 0.0f, 10.0f, 2.5f, 0.1f, -1.0f, ndPE::ObjectTypes::CUBE);
         _world.makeObject(10.1f - 20*i, 2.5f - 5*i, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.1f, 2.5f, 10.0f, -1.0f, ndPE::ObjectTypes::CUBE);
+        _world.makeObject(0.0f - 20*i, 2.0f - 5*i, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 3.0f, 2.0f, 3.0f, -1.0f, ndPE::ObjectTypes::CUBE);
     }
+    _world.makeObject(-10.1f - 20*3, 2.5f - 5*3, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.1f, 2.5f, 10.0f, -1.0f, ndPE::ObjectTypes::CUBE);
 
     // Colliding balls
-    const float height = 10.0f;
+    const float height = 30.0f;
     ballObj = _world.makeObject(-7.0f, height, 0.0f, 90.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, ndPE::ObjectTypes::BALL);
     /*ballObj->setAngle(45);
     ballObj->setRotationAxisVector(0, 0, 1);*/
@@ -62,14 +64,15 @@ void Simulation::initSystems()
     _world.makeObject(6.0f, height, 3.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, ndPE::ObjectTypes::BALL);
     _world.makeObject(6.0f, height, -3.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, ndPE::ObjectTypes::BALL);
     */
+
     for (int i = 0; i < 4; i++)
         for (int j = 0; j < 4; j++)
             for (int k = 0; k < 3; k++)
-    _world.makeObject(-7.0f + 3 * i + k, 3.0f * k + 2, -7.0f + 3 * j + k, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, ndPE::ObjectTypes::BALL);
+    _world.makeObject(-7.0f + 3 * i + k, 2.5f * k + 5.5 + 0.1 * i, -7.0f + 3 * j + k, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, ndPE::ObjectTypes::BALL);
 
 
-    _window->_camera.setPosition(-25.0f, 10.0f, 15.0f);
-    _window->_camera.setLookAt(0.0f, 1.0f, 2.0f);
+    _window->_camera.setPosition(-85.0f, 15.0f, 35.0f);
+    _window->_camera.setLookAt(-15.0f, -15.0f, 0.0f);
 
 }
 

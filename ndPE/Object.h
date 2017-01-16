@@ -87,7 +87,7 @@ namespace ndPE {
 
         friend float findIntersectBB(Object *o1, Object *o2, float dt, float g);   //!< Finds dt in which two ball have collided during the last frame
         friend float findIntersectCB(Object *o1, Object *o2, float dt, float g);   //!< Finds dt in which cube and ball have collided during the last frame
-        friend void resolveCollisionBB(Object *o1, Object *o2, float dt, float g); //!< Updates states of collided balls
+        friend void resolveCollisionBB(Object *o1, Object *o2, float dt, float g, float amort); //!< Updates states of collided balls
         friend void resolveCollisionCB(Object *o1, Object *o2, float dt, float g, float amort); //!< Updates states of collided cube and ball
 
         friend bool checkCollision(const Object *o1, const Object *o2);    //!< Determines which collision detection function to call

@@ -98,7 +98,7 @@ void ndPE::World::resolveState() // Migrate separate resolving functions to the 
         else if (o1t == ndPE::ObjectTypes::BALL && o2t == ndPE::ObjectTypes::BALL)
         {
             // std::cout <<"B-B" <<std::endl;
-            ndPE::resolveCollisionBB(o1, o2, _frameTime, _gravity);
+            ndPE::resolveCollisionBB(o1, o2, _frameTime, _gravity, _amortCoef);
         }
         delete collision; // collisions;
         collision = getCollision(); // collisions = getCollisions();

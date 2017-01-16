@@ -75,12 +75,12 @@ float ndPE::findIntersectCB(ndPE::Object *o1, ndPE::Object *o2, float dt, float 
     return lt;
 }
 
-void ndPE::resolveCollisionBB(ndPE::Object *o1, ndPE::Object *o2, float dt, float g)
+void ndPE::resolveCollisionBB(ndPE::Object *o1, ndPE::Object *o2, float dt, float g, float amort)
 {
     float remTime = dt - ndPE::findIntersectBB(o1, o2, dt, g);   // remaining time until end of the frame
 
 	glm::vec3 impulseVec = glm::normalize(o1->_pos - o2->_pos) *
-        glm::length(o2->getVelocity()*o2->_mass - o1->getVelocity()*o1->_mass); // obj1 impulse
+        glm::length(o2->getVelocity()*o2->_mass - o1->getVelocity()*o1->_mass) * amort; // obj1 impulse
 
 	glm::vec3 newVel1 = o1->getVelocity() + (1 / o1->_mass) * impulseVec;
 	glm::vec3 newVel2 = o2->getVelocity() - (1 / o2->_mass) * impulseVec;

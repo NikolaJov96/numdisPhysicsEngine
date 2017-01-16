@@ -31,7 +31,7 @@ EXPORTS
     _ZN4ndPE16checkCollisionBBEPKNS_6ObjectES2_ @30
     _ZN4ndPE16checkCollisionCBEPKNS_6ObjectES2_ @31
     _ZN4ndPE16checkCollisionCCEPKNS_6ObjectES2_ @32
-    _ZN4ndPE18resolveCollisionBBEPNS_6ObjectES1_ff @33
+    _ZN4ndPE18resolveCollisionBBEPNS_6ObjectES1_fff @33
     _ZN4ndPE18resolveCollisionCBEPNS_6ObjectES1_fff @34
     _ZN4ndPE5World10makeObjectEfffffffffffNS_11ObjectTypesE @35
     _ZN4ndPE5World12getCollisionEv @36
